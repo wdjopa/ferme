@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('layouts.app');
     });
+    Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name("logout");
+
     Route::get('/home', 'HomeController@index')->name('home');
     // Route::resource('/', 'HomeController');
 });

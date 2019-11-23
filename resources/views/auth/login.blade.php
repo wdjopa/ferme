@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-	<title>Login V10</title>
+	<title>Gestion Elevage</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -36,21 +36,18 @@
                         @csrf
 					<span class="login100-form-title p-b-51">
 						CONNEXION
-					</span>
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    </span>
+                    @include('layouts.successError')
+                    
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "Votre username est obligatoire">
-						<input class="input100" type="text" name="username" value="{{ old('username') }}" placeholder="Username">
+						<input class="input100" type="text" name="login" value="{{ old('username') ?: old('email') }}" placeholder="Username ou Email">
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "Votre mot de passe est obligatoire">
-						<input class="input100" type="password" name="pass" placeholder="Mot de passe">
+						<input class="input100" type="password" name="password" placeholder="Mot de passe">
 						<span class="focus-input100"></span>
 					</div>
 					
