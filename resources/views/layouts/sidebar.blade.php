@@ -12,7 +12,8 @@
                         Menu
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link @if(Request::segment(1)==='home' || strlen(Request::segment(1))===0) {{ 'active' }} @endif" href="{{route("home")}}"><i class="fa fa-fw fa-home"></i>Accueil
+                        <a class="nav-link @if(Request::segment(1)==='home' || strlen(Request::segment(1))===0) {{ 'active' }} @endif"
+                            href="{{route("home")}}"><i class="fa fa-fw fa-home"></i>Accueil
                             <!--<span class="badge badge-success">6</span>--></a>
                         {{-- <div id="submenu-1" class="collapse submenu" style="">
                             <ul class="nav flex-column">
@@ -60,16 +61,77 @@
                             </ul>
                         </div> --}}
                     </li>
+                    <li class="nav-divider">
+                        FERME
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link @if(Request::segment(1)==='vagues') {{ 'active' }} @endif"
+                            href="{{route("users.index")}}" data-toggle="collapse"
+                            aria-expanded="@if(Request::segment(1)==='vagues') {{ 'true' }} @else {{'false'}} @endif"
+                            data-target="#submenu-1" aria-controls="submenu-1"><i
+                                class="fa fa-fw fa-box-open"></i>Vagues de volailles
+                            <!--<span class="badge badge-success">6</span>--></a>
+                        <div id="submenu-1"
+                            class="@if(Request::segment(1)==='vagues' ) {{ 'collapsed' }} @else {{'collapse'}} @endif submenu"
+                            style="">
+                            <ul class="nav flex-column">
+                                {{-- <li class="nav-item">
+                                                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
+                                                        <div id="submenu-1-2" class="collapse submenu" style="">
+                                                            <ul class="nav flex-column">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" href="index.html">E Commerce Dashboard</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" href="ecommerce-product.html">Product List</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" href="ecommerce-product-single.html">Product Single</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" href="ecommerce-product-checkout.html">Product Checkout</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li> --}}
+                                <li class="nav-item">
+                                    <a class="nav-link @if(Request::segment(1)==='vagues') {{ 'active' }} @endif"
+                                        href="{{route("vagues.index")}}">Vagues en cours</a>
+                                </li>
+                                {{-- <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
+                                        data-target="#submenu-1-1" aria-controls="submenu-1-1">Rôles & Permissions</a>
+                                    <div id="submenu-1-1" class="collapse submenu" style="">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">Rôles</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">Permissions</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">Categories</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li> --}}
+                            </ul>
+                        </div>
+                    </li>
 
                     <li class="nav-divider">
                         ADMINISTRATEUR
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link @if(Request::segment(1)==='users') {{ 'active' }} @endif" href="{{route("users.index")}}" data-toggle="collapse" aria-expanded="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'true' }} @else {{'false'}} @endif"
+                        <a class="nav-link @if(Request::segment(1)==='users') {{ 'active' }} @endif"
+                            href="{{route("users.index")}}" data-toggle="collapse"
+                            aria-expanded="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'true' }} @else {{'false'}} @endif"
                             data-target="#submenu-1" aria-controls="submenu-1"><i
                                 class="fa fa-fw fa-user-circle"></i>Gestion du personnel
                             <!--<span class="badge badge-success">6</span>--></a>
-                        <div id="submenu-1" class="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'collapsed' }} @else {{'collapse'}} @endif submenu" style="">
+                        <div id="submenu-1"
+                            class="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'collapsed' }} @else {{'collapse'}} @endif submenu"
+                            style="">
                             <ul class="nav flex-column">
                                 {{-- <li class="nav-item">
                                     <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1-2" aria-controls="submenu-1-2">E-Commerce</a>
@@ -91,7 +153,8 @@
                                     </div>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a class="nav-link @if(Request::segment(1)==='users') {{ 'active' }} @endif" href="{{route("users.index")}}">Employés</a>
+                                    <a class="nav-link @if(Request::segment(1)==='users') {{ 'active' }} @endif"
+                                        href="{{route("users.index")}}">Employés</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"

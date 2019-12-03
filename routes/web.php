@@ -26,5 +26,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/', 'HomeController@index')->name('home');
+
+
     Route::resource('users', 'UserController');
+    Route::post('/users/multipleDestroy', 'UserController@multipleDestroy')->name('users.multipleDestroy');
+
+
+    Route::resource('vagues', 'VagueController');
+
 });
