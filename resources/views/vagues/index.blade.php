@@ -66,7 +66,7 @@
         <form action="{{route("vagues.store")}}" method="POST">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Création d'un nouvelle vague</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Création d'une nouvelle vague</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>

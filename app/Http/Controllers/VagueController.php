@@ -53,7 +53,9 @@ class VagueController extends Controller
      */
     public function show(Vague $vague)
     {
-        //
+        $page = "approvisionnement";
+        return view("vagues.show", compact("vague", "page"));
+        
     }
 
     /**
@@ -88,5 +90,15 @@ class VagueController extends Controller
     public function destroy(Vague $vague)
     {
         //
+    }
+
+    public function approvisionnement(Vague $vague){
+        $page = "approvisionnement";
+        return view("vagues.show", compact("vague","page"));
+    }
+
+    public function comptabilite(Vague $vague){
+        $page = "comptabilite";
+        return view("vagues.show", compact("vague","page"));
     }
 }
