@@ -63,13 +63,25 @@
                     </li>
                     <li class="nav-divider">
                         FERME
+                    </li><li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1) == "fournisseurs") active @endif" href="{{route("fournisseurs.index")}}"><i class="fa fa-fw fa-hands-helping"></i>Fournisseurs</a>
+                    </li><li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1) == "clients") active @endif" href="dashboard-sales.html"><i class="fa fa-fw fa-user-plus"></i>Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1) == "approvisionnements") active @endif" href="dashboard-sales.html"><i
+                                class="fa fa-fw fa-inbox"></i>Approvisionnement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard-sales.html"><i class="fa fa-fw fa-donate"></i>
+                            Comptabilité</a>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link @if(Request::segment(1)==='vagues') {{ 'active' }} @endif"
                             href="{{route("users.index")}}" data-toggle="collapse"
                             aria-expanded="@if(Request::segment(1)==='vagues') {{ 'true' }} @else {{'false'}} @endif"
                             data-target="#submenu-1" aria-controls="submenu-1"><i
-                                class="fa fa-fw fa-box-open"></i>Vagues de volailles
+                                class="fa fa-fw fa-box-open"></i>Gestion de la production
                             <!--<span class="badge badge-success">6</span>--></a>
                         <div id="submenu-1"
                             class="@if(Request::segment(1)==='vagues' ) {{ 'collapsed' }} @else {{'collapse'}} @endif submenu"
@@ -175,6 +187,9 @@
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route("parametres")}}"><i class="fa fa-fw fa-cog"></i>Parametres</a>
                     </li>
                     {{-- <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>UI Elements</a>

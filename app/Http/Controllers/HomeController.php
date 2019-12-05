@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * Show the application settings.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function parametres()
+    {
+        return view('layouts.parametres');
+    }
 }

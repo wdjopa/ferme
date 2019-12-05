@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title>Gestion Elevage</title>
+	<title>MADELIS</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="login-template/images/icons/favicon.ico"/>
+    <link rel="shortcut icon" href="{{asset("favicon.jpeg")}}" type="image/jpeg">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="login-template/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
