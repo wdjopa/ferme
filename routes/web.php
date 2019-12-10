@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/users/multipleDestroy', 'UserController@multipleDestroy')->name('users.multipleDestroy');
 
 
+    Route::resource('approvisionnements', 'ApprovisionnementController');
+    
     Route::resource('categories_approvisionnements', 'CategorieApprovisionnementController');
     Route::post('/categories_approvisionnements/multipleDestroy', 'CategorieApprovisionnementController@multipleDestroy')->name('categories_approvisionnements.multipleDestroy');
     

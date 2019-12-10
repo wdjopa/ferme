@@ -20,6 +20,7 @@ class CreateApprovisionnementsTable extends Migration
 
             $table->datetime('date_approvisionnement');
             $table->integer('quantite');
+            $table->text('description');
             $table->integer('prix_total');
             $table->timestamps();
             

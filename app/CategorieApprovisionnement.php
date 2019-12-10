@@ -7,4 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategorieApprovisionnement extends Model
 {
     //
+    public function approvisionnements(){
+        return $this->belongsTo(Approvisionnement::class);
+    }
 }

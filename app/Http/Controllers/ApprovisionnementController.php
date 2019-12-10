@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Approvisionnement;
+use App\CategorieApprovisionnement;
+use App\Fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovisionnementController extends Controller
 {
@@ -12,9 +15,13 @@ class ApprovisionnementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($page = 0)
     {
-        //
+        $categories_approvisionnements = CategorieApprovisionnement::all();
+        $approvisionnements = Approvisionnement::all();
+        $fournisseurs = Fournisseur::all();
+        // $page = "";
+        return view("approvisionnements.index", compact("approvisionnements", "categories_approvisionnements", "fournisseurs", "page"));
     }
 
     /**
@@ -35,7 +42,16 @@ class ApprovisionnementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $approvisionnement = new Approvisionnement();
+        $approvisionnement->quantite = $request->quantite;
+        $approvisionnement->prix_total = $request->prix_total;
+        $approvisionnement->date_approvisionnement = $request->date;
+        $approvisionnement->description = $request->description;
+        $approvisionnement->fournisseur_id = $request->fournisseur;
+        $approvisionnement->categorie_approvisionnement_id = $request->categorie;
+        $approvisionnement->save();
+        // ActivityLogger::activity("Ajout d'un nouvel utilisateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
+        return redirect()->back()->with(['success' => "Le nouvel employé a bien été enregistré", 'sendmailto' => Auth::user()->email]);
     }
 
     /**
