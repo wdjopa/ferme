@@ -108,7 +108,7 @@
                                                     </li> --}}
                                 <li class="nav-item">
                                     <a class="nav-link @if(Request::segment(1)==='vagues') {{ 'active' }} @endif"
-                                        href="{{route("vagues.index")}}">Vagues en cours</a>
+                                        href="{{route("vagues.index")}}">Vagues de production</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
@@ -138,10 +138,10 @@
                         <a class="nav-link @if(Request::segment(1)==='users') {{ 'active' }} @endif"
                             href="{{route("users.index")}}" data-toggle="collapse"
                             aria-expanded="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'true' }} @else {{'false'}} @endif"
-                            data-target="#submenu-1" aria-controls="submenu-1"><i
+                            data-target="#submenu-2" aria-controls="submenu-2"><i
                                 class="fa fa-fw fa-user-circle"></i>Gestion du personnel
                             <!--<span class="badge badge-success">6</span>--></a>
-                        <div id="submenu-1"
+                        <div id="submenu-2"
                             class="@if(Request::segment(1)==='users' || Request::segment(1)==='roles' || Request::segment(1)==='permissions' || Request::segment(1)==='categories') {{ 'collapsed' }} @else {{'collapse'}} @endif submenu"
                             style="">
                             <ul class="nav flex-column">
@@ -170,8 +170,8 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
-                                        data-target="#submenu-1-1" aria-controls="submenu-1-1">Rôles & Permissions</a>
-                                    <div id="submenu-1-1" class="collapse submenu" style="">
+                                        data-target="#submenu-2-1" aria-controls="submenu-2-1">Rôles & Permissions</a>
+                                    <div id="submenu-2-1" class="collapse submenu" style="">
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#">Rôles</a>

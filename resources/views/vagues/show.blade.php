@@ -22,69 +22,125 @@
     </div>
 </div>
 <div class="row">
-
-    <div class="col-md-3 mt-2 col-sm-12 aside-content">
-        {{-- <div class="aside-header">
-            <button class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button"><span
-                    class="icon"><i class="fas fa-caret-down"></i></span></button><span class="title">Mail
-                Service</span>
-            <p class="description">Service description</p>
-        </div> --}}
-        <div class="aside-nav bg-white">
-            <ul class="nav">
-                <li class="@if($page == trim("approvisionnement")) active @endif"><a
-                        href="{{route("vagues.approvisionnement", $vague)}}"><span class="icon"><i
-                                class="fas fa-fw fa-inbox"></i></span>Approvisionnement</a></li>
-                {{-- <li><a href="#"><span class="icon"><i class="fas fa-fw fa-inbox"></i></span>Approvisionnement<span
-                            class="badge badge-primary float-right">8</span></a></li> --}}
-                <li class="@if($page == trim("comptabilite")) active @endif"><a
-                        href="{{route("vagues.comptabilite", $vague)}}"><span class="icon"><i
-                                class="fas fa-fw  fa-donate"></i></span>Comptabilité</a></li>
-            </ul>
-
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-muted">Qté {{ strtolower(App\CategorieApprovisionnement::find(App\Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle)}} restante</h5>
+                <div class="metric-value d-inline-block">
+                    <h1 class="mb-1">{{$vague->quantite}} {{ ucfirst(App\CategorieApprovisionnement::find(App\Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle)}}(s)</h1>
+                </div>
+                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                    {{-- <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span> --}}
+                </div>
+            </div>
+            <div id="sparkline-revenue"></div>
         </div>
     </div>
-    <div class="col-md-9 mt-2 col-sm-12">
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-muted">Total Ventes comptant</h5>
+                <div class="metric-value d-inline-block">
+                    <h1 class="mb-1">0 FCFA</h1>
+                </div>
+                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                    {{-- <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span> --}}
+                </div>
+            </div>
+            <div id="sparkline-revenue"></div>
+        </div>
+    </div>
+    {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-muted">Argent à récupérer</h5>
+                <div class="metric-value d-inline-block">
+                    <h1 class="mb-1">0 FCFA</h1>
+                </div>
+                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                    <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>
+                </div>
+            </div>
+            <div id="sparkline-revenue2"></div>
+        </div>
+    </div> --}}
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-muted">Total Pertes</h5>
+                <div class="metric-value d-inline-block">
+                    <h1 class="mb-1">0 FCFA</h1>
+                </div>
+                <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                    {{-- <span>N/A</span> --}}
+                </div>
+            </div>
+            <div id="sparkline-revenue3"></div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="text-muted">Total Gain</h5>
+                <div class="metric-value d-inline-block">
+                    <h1 class="mb-1">0 FCFA</h1>
+                </div>
+                <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                    {{-- <span>-2.00%</span> --}}
+                </div>
+            </div>
+            <div id="sparkline-revenue4"></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12 mt-2 col-sm-12">
         @if($page == "approvisionnement")
-        
+
         <div class="simple-card">
             <ul class="nav nav-tabs" id="myTab5" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active border-left-0" id="poulet-tab-simple" data-toggle="tab" href="#poulet-simple"
-                role="tab" aria-controls="poulet" aria-selected="true"><span class="icon"><img src="{{asset("images/chick.png")}}" width="18" class="mr-2" alt="" /></span> Poulets</a>
+                    <a class="nav-link active border-left-0" id="poulet-tab-simple" data-toggle="tab"
+                        href="#poulet-simple" role="tab" aria-controls="poulet" aria-selected="true"><span
+                            class="icon"><img src="{{asset("images/increase.png")}}" width="18" class="mr-2"
+                                alt="" /></span> Gains / Ventes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="aliments-tab-simple" data-toggle="tab" href="#aliments-simple" role="tab"
-                        aria-controls="aliments" aria-selected="false"><span class="icon"><img src="{{asset("images/rice.png")}}" width="18" class="mr-2"  alt="" /></span>Aliments</a>
-                </li><li class="nav-item">
+                        aria-controls="aliments" aria-selected="false"><span class="icon"><img
+                                src="{{asset("images/decrease.png")}}" width="18" class="mr-2"
+                                alt="" /></span>Pertes</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" id="vaccins-tab-simple" data-toggle="tab" href="#vaccins-simple" role="tab"
-                        aria-controls="vaccins" aria-selected="false"><span class="icon"><img src="{{asset("images/vaccin.png")}}" width="18" class="mr-2" alt="" /></span>Vaccins</a>
-                </li><li class="nav-item">
-                    <a class="nav-link" id="materiel-tab-simple" data-toggle="tab" href="#materiel-simple" role="tab"
-                        aria-controls="materiel" aria-selected="false"><span class="icon"><img src="{{asset("images/materiel.png")}}" width="18" class="mr-2" style="" alt="" /></span>Materiel</a>
+                        aria-controls="vaccins" aria-selected="false"><span class="icon"><img
+                                src="{{asset("images/box.png")}}" width="18" class="mr-2" alt="" /></span>Etat
+                        commandes</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent5">
                 <div class="tab-pane fade show active" id="poulet-simple" role="tabpanel"
                     aria-labelledby="poulet-tab-simple">
-                   
-                    
+
+
                 </div>
                 <div class="tab-pane fade" id="aliments-simple" role="tabpanel" aria-labelledby="aliments-tab-simple">
-                    
-                    
+
+
                 </div>
                 <div class="tab-pane fade" id="vaccins-simple" role="tabpanel" aria-labelledby="vaccins-tab-simple">
-                
+
                 </div>
                 <div class="tab-pane fade" id="materiel-simple" role="tabpanel" aria-labelledby="materiel-tab-simple">
-                
+
                 </div>
             </div>
         </div>
-        
+
         @elseif($page == "comptabilite")
-        
+
         <div class="simple-card">
             <ul class="nav nav-tabs" id="myTab5" role="tablist">
                 <li class="nav-item">
@@ -178,14 +234,15 @@
 </div>
 @endsection
 @section("newcss")
-    <style>
-    .simple-card .icon img{
-    filter: grayscale(100%)
+<style>
+    .simple-card .icon img {
+        filter: grayscale(100%)
     }
-    .simple-card .active .icon img{
-    filter: grayscale(0%)
+
+    .simple-card .active .icon img {
+        filter: grayscale(0%)
     }
-    </style>
+</style>
 @endsection
 
 @section("newscript")

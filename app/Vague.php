@@ -14,4 +14,8 @@ class Vague extends Model
             ->get()->toArray();
             return $query;
     }
+    
+    public function approvisionnement(){
+        return $this->belongsTo(Approvisionnement::class);
+    }
 }

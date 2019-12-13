@@ -51,7 +51,7 @@ class ApprovisionnementController extends Controller
         $approvisionnement->categorie_approvisionnement_id = $request->categorie;
         $approvisionnement->save();
         // ActivityLogger::activity("Ajout d'un nouvel utilisateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
-        return redirect()->back()->with(['success' => "Le nouvel employé a bien été enregistré", 'sendmailto' => Auth::user()->email]);
+        return redirect()->back()->with(['success' => "Le nouvel approvisionnement a bien été enregistré", 'sendmailto' => Auth::user()->email]);
     }
 
     /**

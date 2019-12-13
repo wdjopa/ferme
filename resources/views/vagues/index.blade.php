@@ -35,16 +35,16 @@
         @foreach ($vagues as $vague)
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Vague {{$vague->nom}}</h5>
+                <h5 class="card-header">{{$vague->nom}}</h5>
                 <div class="card-body">
                     <div class="metric-value d-inline-block">
-                        <h3 class="mb-1">{{ $vague->quantite }} <small>Poulet(s)</small></h3>
+                    <h3 class="mb-1">{{ $vague->quantite }} <small> {{ ucfirst(App\CategorieApprovisionnement::find(App\Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle)}}(s)</small></h3>
                     </div>
                     {{-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                         <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i
                                 class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">25%</span>
                     </div> --}}
-                    
+
                 </div>
                 <div class="card-body bg-light ">
                     <div id="sparkline-3" style="height: 80px; overflow: auto;">{{$vague->description}}
@@ -78,9 +78,25 @@
                         <input id="inputText3" type="text" name="nom" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Quantité de poulets*</label>
-                        <input id="inputText3" type="number" required name="quantite" min="0" class="form-control">
+                        <label for="inputText3" class="col-form-label">Sélectionnez l'approvisionnement à associer*</label>
+                        <select class="form-control" name="approvisionnement" id="approvisionnement">
+                            @foreach ($categories_approvisionnements as $cat)
+                            <optgroup label="{{$cat->libelle}}">
+                                @foreach ($approvisionnements as $app)
+                                @if($app->categorie_approvisionnement_id == $cat->id)
+                                <option id="id{{$app->id}}" value="{{$app->id}}">{{$app->quantite}} {{$cat->libelle}} reçu le 
+                                    {{$app->date_approvisionnement}}</option>
+                                @endif
+                                @endforeach
+                            </optgroup>
+                            @endforeach
+                        </select>
                     </div>
+
+                    {{-- <div class="form-group">
+                        <label for="inputText3" class="col-form-label">Quantité*</label>
+                        <input id="inputText3" type="number" required name="quantite" min="0" class="form-control">
+                    </div> --}}
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description</label>
                         <textarea class="form-control" name="description" id="exampleFormControlTextarea1"

@@ -13,4 +13,7 @@ class Approvisionnement extends Model
     public function fournisseur(){
         return $this->hasOne(Fournisseur::class);
     }
+    public function vague(){
+        return $this->hasOne(Vague::class);
+    }
 }

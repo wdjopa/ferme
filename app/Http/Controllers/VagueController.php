@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Vague;
+use App\Approvisionnement;
+use App\CategorieApprovisionnement;
 use Illuminate\Http\Request;
 
 class VagueController extends Controller
@@ -15,7 +17,9 @@ class VagueController extends Controller
     public function index()
     {
         $vagues = Vague::all()->reverse();
-        return view("vagues.index", compact("vagues"));
+        $approvisionnements = Approvisionnement::all();
+        $categories_approvisionnements = CategorieApprovisionnement::all();
+        return view("vagues.index", compact("vagues", "categories_approvisionnements", "approvisionnements"));
     }
 
     /**
@@ -39,9 +43,13 @@ class VagueController extends Controller
         $vague = new Vague();
         $vague->nom = $request->nom;
         $vague->description = $request->description;
-        $vague->quantite = $request->quantite;
+        $vague->approvisionnement_id = Approvisionnement::find($request->approvisionnement)->id;
+        $vague->quantite = Approvisionnement::find($request->approvisionnement)->quantite;
         $vague->etat = 1;
         $vague->save();
+        // $vague->approvisionnement()->associate(Approvisionnement::find($request->approvisionnement));
+        // $vague->approvisionnement()->match(Approvisionnement::find($request->approvisionnement));
+        // Approvisionnement::find($request->approvisionnement)->vague()->associate($vague);
         return redirect()->back()->with("success", "La vague a bien été créée");
     }
 
