@@ -61,7 +61,7 @@ class FournisseurController extends Controller
      */
     public function show(Fournisseur $fournisseur)
     {
-        //
+        return view("fournisseurs.show", compact("fournisseur"));
     }
 
     /**

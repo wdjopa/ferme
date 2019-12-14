@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Vague;
+use App\Client;
 use App\Approvisionnement;
 use App\CategorieApprovisionnement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VagueController extends Controller
 {
@@ -61,9 +63,9 @@ class VagueController extends Controller
      */
     public function show(Vague $vague)
     {
-        $page = "approvisionnement";
-        return view("vagues.show", compact("vague", "page"));
-        
+        $clients = Client::all();
+        $vague->libelle = CategorieApprovisionnement::find(Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle;
+        return view("vagues.show", compact("vague","clients"));   
     }
 
     /**

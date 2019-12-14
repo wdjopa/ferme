@@ -5,13 +5,13 @@
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-            <h2 class="pageheader-title">Fournisseurs </h2>
+            <h2 class="pageheader-title">Clients </h2>
             <p class="pageheader-text"></p>
             <div class="page-breadcrumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route("home")}}" class="breadcrumb-link">Ferme</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Liste des fournisseurs</li>
+                        <li class="breadcrumb-item active" aria-current="page">Liste des clients</li>
                     </ol>
                 </nav>
             </div>
@@ -24,14 +24,14 @@
         <!-- basic table  -->
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <form method="POST" action="{{route("fournisseurs.multipleDestroy")}}">
+            <form method="POST" action="{{route("clients.multipleDestroy")}}">
                 @csrf
                 <div class="card">
                     <div class="d-flex justify-content-between">
-                        <h5 class="card-header">Liste des fournisseurs</h5>
+                        <h5 class="card-header">Liste des clients</h5>
                         <h5 class="card-header">
-                            <a href="{{route("fournisseurs.create")}}" class="btn btn-primary btn-xs">Ajouter un
-                                fournisseur</a>
+                            <a href="{{route("clients.create")}}" class="btn btn-primary btn-xs">Ajouter un
+                                client</a>
                             <button class="btn btn-danger btn-xs">Supprimer la sélection</button>
                         </h5>
                     </div>
@@ -47,7 +47,7 @@
                                             </label>
                                         </th>
                                         <th>Noms</th>
-                                        <th>localisation</th>
+                                        <th>Adresse</th>
                                         <th>Tél</th>
                                         <th>Email</th>
                                         <th>Description</th>
@@ -55,29 +55,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($fournisseurs as $fournisseur)
+                                    @foreach ($clients as $client)
                                     <tr>
                                         <td>
                                             <label class="custom-control custom-checkbox">
                                                 <input class="custom-control-input checkboxes" type="checkbox"
-                                                    value="{{$fournisseur->id}}" name="ids[]"
-                                                    id="check{{$fournisseur->id}}"><span
+                                                    value="{{$client->id}}" name="ids[]"
+                                                    id="check{{$client->id}}"><span
                                                     class="custom-control-label"></span>
                                             </label>
                                         </td>
+                                        <td>{{$client->prenom}} {{$client->nom}}</td>
+                                        <td>{{$client->localisation}}</td>
+                                        <td>{{$client->tel}}</td>
+                                        <td>{{$client->email}}</td>
+                                        <td>{{$client->description}}</td>
                                         <td>
-                                            <a href="{{route("fournisseurs.show", $fournisseur)}}">
-                                                {{$fournisseur->nom}}
-                                            </a>
-                                        </td>
-                                        <td>{{$fournisseur->localisation}}</td>
-                                        <td>{{$fournisseur->tel}}</td>
-                                        <td>{{$fournisseur->email}}</td>
-                                        <td>{{$fournisseur->description}}</td>
-                                        <td>
-                                            <a href="{{route("fournisseurs.edit", $fournisseur)}}"
+                                            <a href="{{route("clients.edit", $client)}}"
                                                 class="btn btn-brand btn-xs">Modifier</a>
-                                            <button onclick="deleteElt('{{$fournisseur->id}}')"
+                                            <button onclick="deleteElt('{{$client->id}}')"
                                                 class="btn btn-danger btn-xs">Supprimer</button>
                                         </td>
                                     </tr>
@@ -93,7 +89,7 @@
                                             </label>
                                         </th>
                                         <th>Noms</th>
-                                        <th>localisation</th>
+                                        <th>Adresse</th>
                                         <th>Tél</th>
                                         <th>Email</th>
                                         <th>Description</th>

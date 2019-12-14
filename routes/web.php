@@ -40,7 +40,18 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('fournisseurs', 'FournisseurController');
     Route::post('/fournisseurs/multipleDestroy', 'FournisseurController@multipleDestroy')->name('fournisseurs.multipleDestroy');
+  
+    Route::resource('clients', 'ClientController');
+    Route::post('/clients/multipleDestroy', 'ClientController@multipleDestroy')->name('clients.multipleDestroy');
 
+    Route::resource('commandes', 'CommandeController');
+    Route::post('/commandes/multipleDestroy', 'CommandeController@multipleDestroy')->name('commandes.multipleDestroy');
+    Route::post('/commandes/paiement', 'CommandeController@paiement')->name('commandes.paiement');
+    Route::post('/commandes/livraison', 'CommandeController@livraison')->name('commandes.livraison');
+    
+    Route::resource('pertes', 'PerteController');
+    Route::post('/pertes/multipleDestroy', 'PerteController@multipleDestroy')->name('pertes.multipleDestroy');
+    
     Route::resource('vagues', 'VagueController');
     Route::get('vagues/{vague}/approvisionnement', 'VagueController@approvisionnement')->name("vagues.approvisionnement");
     Route::get('vagues/{vague}/comptabilite', 'VagueController@comptabilite')->name("vagues.comptabilite");
