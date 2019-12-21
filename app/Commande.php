@@ -19,4 +19,9 @@ class Commande extends Model
     public function livraison(){
         return $this->belongsTo(Livraison::class);
     }
+    public function paiementOk(){
+        return DB::table('commandes')
+            ->join('paiements', 'paiements.id', '=', 'commandes.paiement_id')
+            ->where('paiements.etat', '2')->get();
+    }
 }

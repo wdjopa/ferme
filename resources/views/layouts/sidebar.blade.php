@@ -174,13 +174,13 @@
                                     <div id="submenu-2-1" class="collapse submenu" style="">
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#">Rôles</a>
+                                            <a class="nav-link" href="{{route("roles.index")}}">Rôles</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#">Permissions</a>
+                                                <a class="nav-link" href="{{route("permissions.index")}}">Permissions</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#">Categories</a>
+                                                <a class="nav-link" href="{{route("categories.index")}}">Categories</a>
                                             </li>
                                         </ul>
                                     </div>

@@ -41,8 +41,7 @@
                         id="{{str_replace(" ", "", strtolower($categorie->libelle))}}-tab-simple" data-toggle="tab"
                         href="#{{str_replace(" ", "", strtolower($categorie->libelle))}}-simple" role="tab"
                         aria-controls="{{str_replace(" ", "", strtolower($categorie->libelle))}}"
-                        aria-selected="true"><span class="icon"><img src="{{asset("images/chick.png")}}" width="18"
-                                class="mr-2" alt="" /></span> {{$categorie->libelle}}</a>
+                        aria-selected="true"><span class="icon"></span> {{$categorie->libelle}}</a>
                 </li>
                 @endforeach
             </ul>
