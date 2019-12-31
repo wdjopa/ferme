@@ -42,7 +42,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'nom' => 'required|unique:clients',
-            'email' => 'required|unique:clients',
+            // 'email' => 'required|unique:clients',
         ]);
         $client = new client();
         $client->nom = $request->nom;

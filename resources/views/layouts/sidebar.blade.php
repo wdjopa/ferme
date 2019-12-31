@@ -65,16 +65,16 @@
                         FERME
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1) == " fournisseurs") active @endif"
+                        <a class="nav-link @if(Request::segment(1) == "fournisseurs") active @endif"
                             href="{{route("fournisseurs.index")}}"><i
                                 class="fa fa-fw fa-hands-helping"></i>Fournisseurs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1) == " clients") active @endif"
+                        <a class="nav-link @if(Request::segment(1) == "clients") active @endif"
                             href="{{route("clients.index")}}"><i class="fa fa-fw fa-user-plus"></i>Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1) == " approvisionnements") active @endif"
+                        <a class="nav-link @if(Request::segment(1) == "approvisionnements") active @endif"
                             href="{{route("approvisionnements.index")}}"><i
                                 class="fa fa-fw fa-inbox"></i>Approvisionnement</a>
                     </li>

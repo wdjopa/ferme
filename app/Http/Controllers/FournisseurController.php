@@ -44,7 +44,7 @@ class FournisseurController extends Controller
     {
         $request->validate([
             'nom' => 'required|unique:fournisseurs',
-            'email' => 'required|unique:fournisseurs',
+            'email' => 'unique:fournisseurs',
         ]);
         $fournisseur = new Fournisseur();
         $fournisseur->nom = $request->nom;
