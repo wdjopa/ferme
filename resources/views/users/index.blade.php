@@ -152,7 +152,7 @@
             
             // if all checkboxes are selected, then checked the main checkbox class and vise versa
             $(".checkboxes").click(function() {
-            
+             
             if ($(".checkboxes").length == $(".subscheked:checked").length) {
                 $(".chk_all").attr("checked", "checked");
             } else {

@@ -51,6 +51,7 @@
                                         <th>Tél</th>
                                         <th>Email</th>
                                         <th>Description</th>
+                                        <th>Total Achats</th>
                                         <th>Options</th>
                                     </tr>
                                 </thead>
@@ -65,11 +66,12 @@
                                                     class="custom-control-label"></span>
                                             </label>
                                         </td>
-                                        <td>{{$client->prenom}} {{$client->nom}}</td>
+                                        <td><a href="{{route("clients.show", $client)}}">{{$client->prenom}} {{$client->nom}}</td>
                                         <td>{{$client->localisation}}</td>
                                         <td>{{$client->tel}}</td>
                                         <td>{{$client->email}}</td>
                                         <td>{{$client->description}}</td>
+                                        <td>{{$client->commandes->sum("cout_total")}} FCFA</td>
                                         <td>
                                             <a href="{{route("clients.edit", $client)}}"
                                                 class="btn btn-brand btn-xs">Modifier</a>
@@ -93,6 +95,7 @@
                                         <th>Tél</th>
                                         <th>Email</th>
                                         <th>Description</th>
+                                        <th>Total Achats</th>
                                         <th>Options</th>
                                     </tr>
                                 </tfoot>

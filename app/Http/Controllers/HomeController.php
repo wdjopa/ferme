@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Approvisionnement;
+use App\CategorieApprovisionnement;
+use App\Vague;
+use App\Fournisseur;
+use App\Paiement;
+use App\Commande;
 
 class HomeController extends Controller
 {
@@ -23,7 +29,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+       $categories_approvisionnements = CategorieApprovisionnement::all();
+        $approvisionnements = Approvisionnement::all();
+        $commandes = Commande::all();
+        $vagues = Vague::all();
+        $fournisseurs = Vague::all();
+
+        return view("home",compact("categories_approvisionnements", "approvisionnements", "commandes", "vagues", "fournisseurs"));
+    
     }
 
     /**

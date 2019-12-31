@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Madelis'),
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        jeremykenedy\LaravelLogger\LaravelLoggerServiceProvider::class,
 
         /*
          * Package Service Providers...

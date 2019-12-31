@@ -33,8 +33,9 @@
                         {{ ucfirst($vague->libelle)}}(s)
                     </h1>
                 </div>
-                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                    {{-- <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span> --}}
+                <br>
+                <div class="metric-label text-muted d-inline-block float-right font-weight-bold">
+                    <span>Sur {{App\Approvisionnement::find($vague->approvisionnement_id)->quantite}} {{ ucfirst($vague->libelle)}}(s)</span>
                 </div>
             </div>
             <div id="sparkline-revenue"></div>
@@ -45,10 +46,10 @@
             <div class="card-body">
                 <h5 class="text-muted">Total Ventes comptant</h5>
                 <div class="metric-value d-inline-block">
-                    <h1 class="mb-1">{{ $vague->totalVentes() }} FCFA</h1>
+                    <h1 class="mb-1">{{ $vague->totalVentesComptant() }} FCFA</h1>
                 </div>
-                <div class="metric-label d-inline-block float-right text-success font-weight-bold">
-                    {{-- <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span> --}}
+                <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                <span></span><span>{{ $vague->commandes->sum("cout_total") - $vague->totalVentesComptant() }} FCFA restant</span>
                 </div>
             </div>
             <div id="sparkline-revenue"></div>
@@ -73,10 +74,11 @@
             <div class="card-body">
                 <h5 class="text-muted">Total Pertes</h5>
                 <div class="metric-value d-inline-block">
-                    <h1 class="mb-1">0 FCFA</h1>
+                    <h1 class="mb-1">{{$vague->pertes->sum('somme')}} FCFA</h1>
                 </div>
+                <br>
                 <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
-                    {{-- <span>N/A</span> --}}
+                    <span>{{$vague->pertes->sum('quantite')}} {{ ucfirst($vague->libelle)}}(s) </span>
                 </div>
             </div>
             <div id="sparkline-revenue3"></div>
@@ -87,10 +89,18 @@
             <div class="card-body">
                 <h5 class="text-muted">Total Gain</h5>
                 <div class="metric-value d-inline-block">
-                    <h1 class="mb-1">0 FCFA</h1>
+                    @php
+                    $gain = 0;
+                    $gain = $vague->commandes->sum("cout_total") - $vague->pertes->sum('somme');    
+                    @endphp
+                    <h1 class="mb-1" style="color: @if($gain>0) forestgreen @else red @endif">{{ $gain }} FCFA</h1>
                 </div>
                 <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
-                    {{-- <span>-2.00%</span> --}}
+                    @if($vague->totalVentesComptant() - $vague->pertes->sum('somme') < $gain)
+                    <span><span></span>{{$vague->totalVentesComptant() - $vague->pertes->sum('somme')}} FCFA réel</span>
+                    @else
+                        <br><br><br>
+                    @endif
                 </div>
             </div>
             <div id="sparkline-revenue4"></div>
@@ -185,7 +195,9 @@
                                                         {{$commande->client->nom}}</a>
                                                 </td>
                                                 <td>{{$commande->quantite}}</td>
-                                                <td>{{$commande->cout_total}}</td>
+                                                <td>{{$commande->cout_total}} FCFA
+                                                    @if($commande->paiement->restant > 0)<br>
+                                                <small class="text-danger">{{$commande->paiement->restant}} FCFA restant</small>@endif</td>
                                                 <td>
                                                     @if($commande->paiement->etat == 0)
                                                     <button type="button" class="btn btn-xs btn-danger"
@@ -216,9 +228,9 @@
                                                 <td>{{$commande->date}}</td>
                                                 <td>
                                                     <a href="{{route("commandes.edit", $commande)}}"
-                                                        class="btn btn-brand btn-xs">Modifier</a>
+                                                        class="btn btn-brand btn-xs"><i class="fas fa-pencil-alt"></i></a>
                                                     <button onclick="deleteElt('{{$commande->id}}')"
-                                                        class="btn btn-danger btn-xs">Supprimer</button>
+                                                        class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -449,12 +461,12 @@
                     </div>
                     <div class="form-group">
                         <label for="inputText3" class="col-form-label">Quantité de {{$vague->libelle}} achetée*</label>
-                        <input id="inputText3" type="number" required name="quantite" min="0" max="{{$vague->quantite}}"
+                        <input id="inputText3" type="number" required name="quantite" min="1" max="{{$vague->quantite}}"
                             class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Prix total d'achat*</label>
-                        <input id="inputText3" type="number" required name="total" min="0" class="form-control">
+                        <label for="inputText3" class="col-form-label">Prix total de vente au client*</label>
+                        <input id="inputText3" type="number" required name="total" min="1" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description</label>
@@ -549,7 +561,7 @@
         }
     @endforeach
 
-    function paiment_commande(id){
+    function paiement_commande(id){
         $("#paiementCommande #commande").val(id)
         $("#paiementCommande #total").val(""+commandes[id].total)
         $("#paiementCommande #total").attr("max",""+commandes[id].total)
