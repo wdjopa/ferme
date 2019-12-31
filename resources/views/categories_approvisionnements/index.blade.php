@@ -47,7 +47,7 @@
                                         </td>
                                         <td>{{$categories_approvisionnement->libelle}}</td>
                                         <td>{{$categories_approvisionnement->description}}</td>
-                                        <td>{{$categories_approvisionnement->created_by}}</td>
+                                        <td>{{$categories_approvisionnement->created_at}}</td>
                                         <td>
                                             <a href="{{route("categories_approvisionnements.edit", $categories_approvisionnement)}}"
                                                 class="btn btn-brand btn-xs">Modifier</a>
