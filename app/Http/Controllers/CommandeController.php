@@ -6,6 +6,7 @@ use App\Commande;
 use App\Comptabilite;
 use App\Paiement;
 use App\Vague;
+use Illuminate\Support\Facades\Auth;
 use App\Livraison;
 use Illuminate\Http\Request;
 use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;

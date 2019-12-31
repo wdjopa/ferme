@@ -8,11 +8,14 @@ use App\Approvisionnement;
 use App\CategorieApprovisionnement;
 use App\Vague;
 use App\Fournisseur;
+use Illuminate\Support\Facades\Auth;
 use App\Paiement;
 use App\Commande;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class ComptabiliteController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -48,7 +51,24 @@ class ComptabiliteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comptabilite = new Comptabilite();
+        $comptabilite->depense = false;
+        $comptabilite->recette = false;
+        if($request->type == 0){
+            $comptabilite->depense = true;
+        }
+        else{
+            $comptabilite->recette = true;
+        }
+        $comptabilite->auto = false;
+        $comptabilite->montant = $request->montant;
+        $comptabilite->date = $request->date;
+        $comptabilite->categorie = $request->categorie;
+        $comptabilite->commentaire = $request->commentaire;
+        $comptabilite->save();
+        ActivityLogger::activity("Enregistrement d'une nouvelle entrée comptable par l\'utilisateur :" . Auth::user()->name);
+
+        return redirect()->back()->with("success", "Entrée ajoutée avec succès");
     }
 
     /**

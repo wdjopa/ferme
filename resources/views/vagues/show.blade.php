@@ -300,7 +300,7 @@
                                                     <label class="custom-control custom-checkbox">
                                                         <input class="custom-control-input checkboxes" type="checkbox"
                                                             value="{{$perte->id}}" name="ids[]"
-                                                            id="check{{$perte->id}}"><span
+                                                            id="checkpertesForm{{$perte->id}}"><span
                                                             class="custom-control-label"></span>
                                                     </label>
                                                 </td>
@@ -312,7 +312,7 @@
                                                 <td>
                                                     <a href="{{route("pertes.edit", $perte)}}"
                                                         class="btn btn-brand btn-xs">Modifier</a>
-                                                    <button onclick="deleteElt('{{$perte->id}}')"
+                                                <button type="button" onclick="deleteElt('{{$perte->id}}', '#pertesForm')"
                                                         class="btn btn-danger btn-xs">Supprimer</button>
                                                 </td>
                                             </tr>
@@ -568,10 +568,11 @@
     }
 
 
-    function deleteElt(id){
-        $(".checkboxes").prop("checked", false);
-        $("#check"+id).prop("checked", true);
-        $("form").submit()
+    function deleteElt(id, form){
+        $(form+ " .checkboxes").prop("checked", false);
+        $(form+" #check"+form.replace("#", "")+id).prop("checked", true);
+        // console.log(form+" #check"+form.replace("#", "")+id)
+        $("form"+form).submit()
     }
 
     $(document).ready(function() {

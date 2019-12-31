@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Vague;
 use App\Perte;
 use App\Comptabilite;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class PerteController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +62,7 @@ class PerteController extends Controller
             $comptabilite->montant = $request->prix_total;
             $comptabilite->date = $request->date;
             $comptabilite->categorie = "perte";
-            $comptabilite->categorie_id = $approvisionnement->id;
+            $comptabilite->categorie_id = $perte->id;
             $comptabilite->commentaire = "Nouvelle perte de ".$request->quantite." ".$approvisionnement->categorieApprovisionnement->libelle."(s)";
             $comptabilite->save();
        

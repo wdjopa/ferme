@@ -129,6 +129,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form action="{{route("comptabilites.store")}}" method="POST">
+            @csrf
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Création d'une dépense / recette</h5>
@@ -137,37 +138,33 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    @csrf<div class="form-group">
-                        <label for="inputText3" class="col-form-label">Catégorie de l'approvisionnement</label>
+                    <div class="form-group">
+                        <label for="inputText3" class="col-form-label">Catégorie de l'entrée</label>
                         <select class="form-control" name="categorie" id="categorie_select">
                             @foreach ($categories_approvisionnements as $cat)
-                            <option id="id{{$cat->id}}" value="{{$cat->id}}">{{$cat->libelle}}</option>
+                            <option id="id{{$cat->id}}" value="{{$cat->libelle}}">{{$cat->libelle}}</option>
                             @endforeach
+                            <option id="id0" value="autre">Autre</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Fournisseur de l'approvisionnement</label>
-                        <select class="form-control" name="fournisseur" id="">
-                            @foreach ($fournisseurs as $fournisseur)
-                            <option value="{{$fournisseur->id}}">{{$fournisseur->nom}}</option>
-                            @endforeach
+                        <label for="inputText3" class="col-form-label">Type d'entrée</label>
+                        <select class="form-control" name="type" id="">
+                            <option value="0">Dépense</option>
+                            <option value="1">Recette</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Quantité*</label>
-                        <input id="inputText3" type="number" required name="quantite" min="0" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="inputText3" class="col-form-label">Prix Total (en FCFA)*</label>
-                        <input id="inputText3" type="number" required name="prix_total" min="0" class="form-control">
+                        <input id="inputText3" type="number" required name="montant" min="0" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Date et heure de réception*</label>
+                        <label for="inputText3" class="col-form-label">Date et heure*</label>
                         <input id="inputText3" type="datetime-local" required name="date" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Description de l'approvisionnement reçu</label>
-                        <textarea class="form-control" name="description" id="exampleFormControlTextarea1"
+                        <label for="exampleFormControlTextarea1">Commentaire</label>
+                        <textarea class="form-control" name="commentaire" id="exampleFormControlTextarea1"
                             rows="5"></textarea>
                     </div>
                     <small>(*) : Obligatoire</small>
