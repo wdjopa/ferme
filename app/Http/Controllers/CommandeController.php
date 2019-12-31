@@ -81,12 +81,16 @@ class CommandeController extends Controller
     {
         $commande = Commande::findOrFail($request->commande);
         $paiement = Paiement::findOrFail($commande->paiement_id);
-        // dd($commande);
+        // dd($request->all());
         $paiement->restant -= $request->total;
         if($paiement->restant == 0){
             $paiement->etat = 2;
         }
-        $paiement->commentaire = $paiement->commentaire . "--------------" . $request->description;
+        else if($paiement->restant < $commande->cout_total){
+            $paiement->etat = 1;
+        }
+        if(strlen($request->description)>0)
+           $paiement->commentaire = $paiement->commentaire . "--------------" . $request->description;
         $paiement->save();
         return redirect()->back()->with("success", "Paiement mis à jour avec succès");
     }

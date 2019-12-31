@@ -30,10 +30,11 @@ class Vague extends Model
     public function commandes(){
         return $this->hasMany(Commande::class);
     }
-    public function totalVentes(){
+    public function totalVentesComptant(){
         $total = 0;
         foreach ($this->commandes as $commande) {
-            $total += $commande->cout_total;
+            $paiement = Paiement::findOrFail($commande->paiement_id);
+            $total += $commande->cout_total - $paiement->restant;
         }
         return $total;
     }

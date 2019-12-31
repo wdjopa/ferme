@@ -33,12 +33,13 @@
             </div>
         </div>
         @foreach ($vagues as $vague)
+        <a href="{{route("vagues.show", $vague)}}">
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <h5 class="card-header">{{$vague->nom}}</h5>
                 <div class="card-body">
                     <div class="metric-value d-inline-block">
-                    <h3 class="mb-1">{{ $vague->quantite }} <small> {{ ucfirst(App\CategorieApprovisionnement::find(App\Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle)}}(s)</small></h3>
+                    <h3 class="mb-1">{{ $vague->quantite }} <small> {{ ucfirst(App\CategorieApprovisionnement::find(App\Approvisionnement::find($vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle)}}(s) restant(s)</small></h3>
                     </div>
                     {{-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                         <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i
@@ -51,10 +52,11 @@
                     </div>
                 </div>
                 <div class="card-footer text-center bg-white">
-                    <a href="{{route("vagues.show", $vague)}}" class="card-link">Afficher</a>
+                    <a href="{{route("vagues.show", $vague)}}" class="card-link">Voir plus ...</a>
                 </div>
             </div>
         </div>
+        </a>
         @endforeach
     </div>
 </div>
@@ -83,9 +85,11 @@
                             @foreach ($categories_approvisionnements as $cat)
                             <optgroup label="{{$cat->libelle}}">
                                 @foreach ($approvisionnements as $app)
-                                @if($app->categorie_approvisionnement_id == $cat->id)
-                                <option id="id{{$app->id}}" value="{{$app->id}}">{{$app->quantite}} {{$cat->libelle}} reçu le 
-                                    {{$app->date_approvisionnement}}</option>
+                                @if(!($app->vague))
+                                    @if($app->categorie_approvisionnement_id == $cat->id)
+                                    <option id="id{{$app->id}}" value="{{$app->id}}">{{$app->quantite}} {{$cat->libelle}} reçu le 
+                                        {{$app->date_approvisionnement}}</option>
+                                    @endif
                                 @endif
                                 @endforeach
                             </optgroup>

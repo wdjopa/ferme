@@ -75,6 +75,7 @@
                                                                 class="custom-control-label"></span>
                                                         </label>
                                                     </th>
+                                                    <th>Etat</th>
                                                     <th>Quantité</th>
                                                     <th>Prix total</th>
                                                     <th>Date</th>
@@ -85,28 +86,44 @@
                                             <tbody>
 
                                                 @foreach ($approvisionnements as $app)
-                                                    @if($app->categorie_approvisionnement_id == $categorie->id)
-                                                    <tr>
-                                                        <td>
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input class="custom-control-input checkboxes"
-                                                                    type="checkbox" value="{{$app->id}}" name="ids[]"
-                                                                    id="check{{$app->id}}"><span
-                                                                    class="custom-control-label"></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>{{$app->quantite}}</td>
-                                                        <td>{{$app->prix_total}}</td>
-                                                        <td>{{$app->date_approvisionnement}}</td>
-                                                        <td>{{App\Fournisseur::find($app->fournisseur_id)->nom}}</td>
-                                                        <td>
-                                                            <a href="{{route("approvisionnements.edit", $app)}}"
-                                                                class="btn btn-brand btn-xs">Modifier</a>
-                                                            <button onclick="deleteElt('{{$app->id}}')"
-                                                                class="btn btn-danger btn-xs">Supprimer</button>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
+                                                @if($app->categorie_approvisionnement_id == $categorie->id)
+                                                <tr>
+                                                    <td>
+                                                        <label class="custom-control custom-checkbox">
+                                                            <input class="custom-control-input checkboxes"
+                                                                type="checkbox" value="{{$app->id}}" name="ids[]"
+                                                                id="check{{$app->id}}"><span
+                                                                class="custom-control-label"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        @if($app->vague)
+                                                        <a href="{{route("vagues.show", $app->vague)}}"
+                                                            class="btn btn-primary btn-xs"><i
+                                                                class="fas fa-external-link-alt"></i> Consulter la
+                                                            vague</a>
+                                                        @else
+                                                        <a href="#"
+                                                            class="btn btn-success btn-xs"> Disponible</a>
+
+                                                        @endif
+                                                    </td>
+                                                    <td>{{$app->quantite}}</td>
+                                                    <td>{{$app->prix_total}}</td>
+                                                    <td>{{$app->date_approvisionnement}}</td>
+                                                    <td>
+                                                        <a href="{{route("fournisseurs.show", App\Fournisseur::find($app->fournisseur_id))}}">
+                                                                {{App\Fournisseur::find($app->fournisseur_id)->nom}}
+                                                            </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route("approvisionnements.edit", $app)}}"
+                                                            class="btn btn-brand btn-xs">Modifier</a>
+                                                        <button onclick="deleteElt('{{$app->id}}')"
+                                                            class="btn btn-danger btn-xs">Supprimer</button>
+                                                    </td>
+                                                </tr>
+                                                @endif
                                                 @endforeach
                                             </tbody>
                                             <tfoot>
@@ -118,7 +135,7 @@
                                                                 class="custom-control-label"></span>
                                                         </label>
                                                     </th>
-                                                    <th>Quantité</th>
+                                                    <th>Etat</th><th>Quantité</th>
                                                     <th>Prix total</th>
                                                     <th>Date</th>
                                                     <th>Fournisseur</th>
