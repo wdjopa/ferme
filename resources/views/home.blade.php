@@ -121,6 +121,7 @@
                                     <th class="border-0">Client</th>
                                     <th class="border-0">Statut Livraison</th>
                                     <th class="border-0">Statut Paiement</th>
+                                    <th class="border-0">Options</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,7 +153,10 @@
                     <td><span
                             class="badge-dot @if($commande->paiement->etat == 2)badge-success @elseif($commande->paiement->etat == 1) badge-warning @else badge-danger @endif mr-1"></span>@if($commande->paiement->etat
                         == 2)Payé @elseif($commande->paiement->etat == 1) Initié @else Non payée @endif </td>
-                    </tr>
+                    <td>
+                        <a href="{{route("vagues.show", $commande->vague)}}" class="btn btn-xs btn-secondary">Voir</a>
+                    </td>
+                </tr>
                     @endforeach
                     <tr>
                         <td colspan="9"><a href="{{route("vagues.index")}}"
