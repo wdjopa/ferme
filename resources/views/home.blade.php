@@ -25,13 +25,13 @@
                 <div class="card-body">
                     <h5 class="text-muted">Commandes à livrer</h5>
                     <div class="metric-value d-inline-block">
-                            @php
-                                $total = 0;
-                                foreach($vagues as $vague){
-                                    $total+= $vague->commandesALivrer();
-                                }
-                                
-                            @endphp
+                        @php
+                        $total = 0;
+                        foreach($vagues as $vague){
+                        $total+= $vague->commandesALivrer();
+                        }
+
+                        @endphp
                         <h1 class="mb-1 @if($total>0)text-warning @endif">{{$total}} cmde(s)</h1>
                     </div>
                     <div class="metric-label d-inline-block float-right text-success font-weight-bold">
@@ -47,10 +47,10 @@
                     <h5 class="text-muted">Argent manquant</h5>
                     <div class="metric-value d-inline-block">
                         @php
-                            $total = 0;
-                            foreach($vagues as $vague){
-                                $total += $vague->commandes->sum("cout_total") - $vague->totalVentesComptant();
-                            }
+                        $total = 0;
+                        foreach($vagues as $vague){
+                        $total += $vague->commandes->sum("cout_total") - $vague->totalVentesComptant();
+                        }
                         @endphp
                         <h1 class="mb-1 @if($total>0)text-danger @endif">{{ $total}} FCFA</h1>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <h5 class="text-muted">Dettes</h5>
                     <div class="metric-value d-inline-block">
-                    <h1 class="mb-1">0.0</h1>
+                        <h1 class="mb-1">0.0</h1>
                     </div>
                     <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
                         <span>N/A</span>
@@ -83,7 +83,7 @@
                     foreach($vagues as $vague){
                     $total+= $vague->totalVentesComptant();
                     }
-                    
+
                     @endphp
                     <h5 class="text-muted">Total Revenus</h5>
                     <div class="metric-value d-inline-block">
@@ -105,7 +105,7 @@
 
         <!-- recent orders  -->
         <!-- ============================================================== -->
-        <div class="col-xl-9 col-lg-12 col-md-6 col-sm-12 col-12">
+        <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <h5 class="card-header">Commandes récentes</h5>
                 <div class="card-body p-0">
@@ -119,54 +119,61 @@
                                     <th class="border-0">Prix</th>
                                     <th class="border-0">Date commande</th>
                                     <th class="border-0">Client</th>
-                                    <th class="border-0">Statut</th>
+                                    <th class="border-0">Statut Livraison</th>
+                                    <th class="border-0">Statut Paiement</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
-                                    $limit = 5;
+                                $limit = 5;
                                 @endphp
                                 @foreach ($commandes->reverse() as $commande)
-                            
+
                                 @php
-                                    if($limit--<=0)
-                                        break;
-                                    $commande->vague->libelle = App\CategorieApprovisionnement::find(App\Approvisionnement::find($commande->vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle;
-                                @endphp
-                                <tr>
-                                    <td>#{{$commande->id}}</td>
-                                    {{-- <td>
+                                if($limit--<=0) break; $commande->vague->libelle =
+                                    App\CategorieApprovisionnement::find(App\Approvisionnement::find($commande->vague->approvisionnement_id)->categorie_approvisionnement_id)->libelle;
+                                    @endphp
+                                    <tr>
+                                        <td>#{{$commande->id}}</td>
+                                        {{-- <td>
                                         <div class="m-r-10"><img src="{{asset("assets/images/product-pic-2.jpg")}}"
-                                                alt="user" class="rounded" width="45"></div>
-                                    </td> --}}
-                                    <td>{{$commande->vague->libelle}} </td>
-                                    <td>{{$commande->quantite}}</td>
-                                    <td>{{$commande->cout_total}}</td>
-                                    <td>{{$commande->date}}</td>
-                                    <td><a href="{{route("clients.show", $commande->client)}}">{{$commande->client->prenom}}
-                                        {{$commande->client->nom}}</a> </td>
-                                    <td><span class="badge-dot @if($commande->livraison->etat == 1)badge-success @else badge-warning @endif mr-1"></span>@if($commande->livraison->etat == 1)Livré @else En attente @endif </td>
-                                </tr>
-                                @endforeach
-                                <tr>
-                                <td colspan="9"><a href="{{route("vagues.index")}}" class="btn btn-outline-light float-right">Voir les autres
-                                        commandes</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        alt="user" class="rounded" width="45">
                     </div>
+                    </td> --}}
+                    <td>{{$commande->vague->libelle}} </td>
+                    <td>{{$commande->quantite}}</td>
+                    <td>{{$commande->cout_total}}</td>
+                    <td>{{$commande->date}}</td>
+                    <td><a href="{{route("clients.show", $commande->client)}}">{{$commande->client->prenom}}
+                            {{$commande->client->nom}}</a> </td>
+                    <td><span
+                            class="badge-dot @if($commande->livraison->etat == 1)badge-success @else badge-warning @endif mr-1"></span>@if($commande->livraison->etat
+                        == 1)Livrée @else En attente @endif </td>
+                    <td><span
+                            class="badge-dot @if($commande->paiement->etat == 2)badge-success @elseif($commande->paiement->etat == 1) badge-warning @else badge-danger @endif mr-1"></span>@if($commande->paiement->etat
+                        == 2)Payé @elseif($commande->paiement->etat == 1) Initié @else Non payée @endif </td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="9"><a href="{{route("vagues.index")}}"
+                                class="btn btn-outline-light float-right">Voir les autres
+                                commandes</a></td>
+                    </tr>
+                    </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end recent orders  -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- end recent orders  -->
 
 
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- customer acquistion  -->
-        <!-- ============================================================== -->
-        {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customer acquistion  -->
+    <!-- ============================================================== -->
+    {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <h5 class="card-header">Customer Acquisition</h5>
                 <div class="card-body">
@@ -187,15 +194,15 @@
                 </div>
             </div>
         </div> --}}
-        <!-- ============================================================== -->
-        <!-- end customer acquistion  -->
-        <!-- ============================================================== -->
-    </div>
-    <div class="row">
-        <!-- ============================================================== -->
-        <!-- product category  -->
-        <!-- ============================================================== -->
-        {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+    <!-- ============================================================== -->
+    <!-- end customer acquistion  -->
+    <!-- ============================================================== -->
+</div>
+<div class="row">
+    <!-- ============================================================== -->
+    <!-- product category  -->
+    <!-- ============================================================== -->
+    {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <h5 class="card-header"> Product Category</h5>
                 <div class="card-body">
@@ -219,11 +226,11 @@
                 </div>
             </div>
         </div> --}}
-        <!-- ============================================================== -->
-        <!-- end product category  -->
-        <!-- product sales  -->
-        <!-- ============================================================== -->
-        {{-- <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
+    <!-- ============================================================== -->
+    <!-- end product category  -->
+    <!-- product sales  -->
+    <!-- ============================================================== -->
+    {{-- <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
                 <div class="card-header">
                     <!-- <div class="float-right">
@@ -241,10 +248,10 @@
                 </div>
             </div>
         </div> --}}
-        <!-- ============================================================== -->
-        <!-- end product sales  -->
-        <!-- ============================================================== -->
-        {{-- <div class="col-xl-3 col-lg-12 col-md-6 col-sm-12 col-12">
+    <!-- ============================================================== -->
+    <!-- end product sales  -->
+    <!-- ============================================================== -->
+    {{-- <div class="col-xl-3 col-lg-12 col-md-6 col-sm-12 col-12">
             <!-- ============================================================== -->
             <!-- top perfomimg  -->
             <!-- ============================================================== -->
@@ -305,7 +312,7 @@
             <!-- end top perfomimg  -->
             <!-- ============================================================== -->
         </div> --}}
-    </div>
+</div>
 {{-- 
     <div class="row">
         <!-- ============================================================== -->
