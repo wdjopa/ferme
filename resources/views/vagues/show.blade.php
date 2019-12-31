@@ -460,7 +460,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="inputText3" class="col-form-label">Quantité de {{$vague->libelle}} achetée*</label>
+                        <label for="inputText3" class="col-form-label">Quantité de {{$vague->libelle}} vendues*</label>
                         <input id="inputText3" type="number" required name="quantite" min="1" max="{{$vague->quantite}}"
                             class="form-control">
                     </div>

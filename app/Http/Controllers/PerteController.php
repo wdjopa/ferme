@@ -59,17 +59,17 @@ class PerteController extends Controller
             $comptabilite->depense = true;
             $comptabilite->recette = false;
             $comptabilite->auto = true;
-            $comptabilite->montant = $request->prix_total;
-            $comptabilite->date = $request->date;
+            $comptabilite->montant = $request->total;
+            $comptabilite->date = date('Y-m-d H:i:s');
             $comptabilite->categorie = "perte";
             $comptabilite->categorie_id = $perte->id;
-            $comptabilite->commentaire = "Nouvelle perte de ".$request->quantite." ".$approvisionnement->categorieApprovisionnement->libelle."(s)";
+            $comptabilite->commentaire = "Nouvelle perte de ".$request->quantite." ".$perte->vague->approvisionnement->categorieApprovisionnement->libelle."(s)";
             $comptabilite->save();
        
             $vague->quantite = $vague->quantite - $perte->quantite;
             $vague->save();
             
-            ActivityLogger::activity("Nouvelle perte de ".$request->quantite." ".$approvisionnement->categorieApprovisionnement->libelle."(s) par l\'utilisateur :" . Auth::user()->name);
+            ActivityLogger::activity("Nouvelle perte de ".$request->quantite." ".$perte->vague->approvisionnement->categorieApprovisionnement->libelle."(s), enregistré par l\'utilisateur :" . Auth::user()->name);
             
             // dd($commande);
             return redirect()->back()->with("success", "La perte a bien été enregistrée");
