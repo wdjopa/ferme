@@ -145,7 +145,7 @@
                                     <td>{{$commande->date}}</td>
                                     <td><a href="{{route("clients.show", $commande->client)}}">{{$commande->client->prenom}}
                                         {{$commande->client->nom}}</a> </td>
-                                    <td><span class="badge-dot @if($commande->livraison->etat == 0)badge-success @else badge-warning @endif mr-1"></span>@if($commande->livraison->etat == 0)Livré @else En attente @endif </td>
+                                    <td><span class="badge-dot @if($commande->livraison->etat == 1)badge-success @else badge-warning @endif mr-1"></span>@if($commande->livraison->etat == 1)Livré @else En attente @endif </td>
                                 </tr>
                                 @endforeach
                                 <tr>
