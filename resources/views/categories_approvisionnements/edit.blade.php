@@ -1,201 +1,124 @@
-@extends("layouts.app")
+@extends("layouts.parametres")
 
-@section("content")
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="page-header">
-            <h2 class="pageheader-title">Gestion des utilisateurs </h2>
-            <p class="pageheader-text"></p>
-            <div class="page-breadcrumb">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route("home")}}"
-                                class="breadcrumb-link">Administrateur</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Gestion du personnel</a></li>
-                        <li class="breadcrumb-item"><a href="{{route("users.index")}}" class="breadcrumb-link">Gestion
-                                des employés</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Modifier un nouvel employé</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-</div>
+@section("subcontent")
 <div class="ecommerce-widget">
     <div class="row">
         <!-- ============================================================== -->
-        <!-- valifation types -->
+        <!-- basic table  -->
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Modification de l'employé {{ ucfirst($user->name) }}</h5>
+
                 <div class="card-body">
-                    <form method="post" action="{{route("users.update", $user)}}" id="validationform"
-                        class="needs-validation" data-parsley-validate="" novalidate="">
-                        @csrf
-                        @method("PUT")
-                        <div class="row">
-                            <div class="col-sm-12 col-md-8">
+                    <div class="table-responsive">
+                        <form action="{{route("categories_approvisionnements.update", $categories_approvisionnement)}}"
+                            method="POST">
+                            @csrf
+                            @method("PUT")
 
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Noms & prénoms</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <div class="row">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Mise à jour d'une catégorie</h5>
 
-                                            <div class="col-6 col-sm-6 col-lg-6">
-                                                <input type="text" value="{{$user->prenom}}" name="prenom"
-                                                    placeholder="Entrez les prénoms complets" class="form-control">
-                                            </div>
-                                            <div class="col-6 col-sm-6 col-lg-6">
-                                                <input type="text" value="{{$user->nom}}" required="" name="nom"
-                                                    placeholder="Entrez les noms complets" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Titre/Fonction</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" required="" value="{{$user->titre}}" name="titre"
-                                            placeholder="Entrez le titre ou la fonction" class="form-control">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="inputText3" class="col-form-label">Libellé de la catégorie</label>
+                                        <input id="inputText3" type="text" name="libelle"
+                                            value="{{$categories_approvisionnement->libelle}}" class="form-control">
                                     </div>
+                                    {{-- <div class="form-group">
+                                                <label for="inputText3" class="col-form-label">Quantité de poulets*</label>
+                                                <input id="inputText3" type="number" required name="quantite" min="0" class="form-control">
+                                            </div> --}}
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" name="description"
+                                            id="exampleFormControlTextarea1"
+                                            rows="3">{{$categories_approvisionnement->description}}</textarea>
+                                    </div>
+                                    <small>(*) : Obligatoire</small>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Adresse email</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="email" required="" value="{{$user->email}}" name="email"
-                                            placeholder="Entrez l'adresse email" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Téléphone
-                                        portable</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="tel" class="form-control phone-inputmask" value="{{$user->tel}}"
-                                            name="tel" required id="phone-mask" placeholder="(237) XXX-XXX-XXX">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">N° CNI</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" required="" name="cni" value="{{$user->cni}}"
-                                            placeholder="Entrez le numéro de CNI" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Sexe</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <select name="sexe" id="" required class="form-control">
-                                            <option value="homme" @if($user->sexe == 'homme') selected @endif>Homme
-                                            </option>
-                                            <option value="femme" @if($user->sexe == 'femme') selected @endif>Femme
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Date de
-                                        naissance</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input required name="datenaissance" value="{{$user->datenaissance}}T00:00"
-                                            type="datetime-local" class="form-control" placeholder="jj/mm/aaaa">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Notes</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <textarea name="note" placeholder="Entrez une note sur l'employé"
-                                            class="form-control">{{$user->notes}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row text-right">
-                                    <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                        <a href="{{route("users.index")}}"
-                                            class="btn btn-space btn-secondary">Annuler</a>
-                                        <button type="submit" class="btn btn-space btn-primary">Créer</button>
-                                    </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+                                    <button class="btn btn-primary">Modifier</button>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-4">
-
-                            </div>
-                        </div>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end valifation types -->
-        <!-- ============================================================== -->
     </div>
 </div>
+
+<!-- ============================================================== -->
+<!-- end basic table  -->
+<!-- ============================================================== -->
+
+
 @endsection
 @section("newcss")
-<link rel="stylesheet" href="../assets/vendor/inputmask/css/inputmask.css" />
+
+<link rel="stylesheet" type="text/css" href="{{asset("assets/vendor/datatables/css/dataTables.bootstrap4.css")}}">
+<link rel="stylesheet" type="text/css" href="{{asset("assets/vendor/datatables/css/buttons.bootstrap4.css")}}">
+<link rel="stylesheet" type="text/css" href="{{asset("assets/vendor/datatables/css/select.bootstrap4.css")}}">
+<link rel="stylesheet" type="text/css" href="{{asset("assets/vendor/datatables/css/fixedHeader.bootstrap4.css")}}">
+
 @endsection
 
 @section("newscript")
-<script src="{{asset("assets/vendor/slimscroll/jquery.slimscroll.js")}}"></script>
-<script src="{{asset("assets/vendor/parsley/parsley.js")}}"></script>
-<script src="{{asset("assets/libs/js/main-js.js")}}"></script>
-<script src="../assets/vendor/inputmask/js/jquery.inputmask.bundle.js"></script>
-<script>
-    $(function(e) {
-        "use strict";
-        $(".date-inputmask").inputmask("dd/mm/yyyy"),
-            $(".phone-inputmask").inputmask("(999) 999-999-999"),
-            $(".international-inputmask").inputmask("+9(999)999-9999"),
-            $(".xphone-inputmask").inputmask("(999) 999-9999 / x999999"),
-            $(".purchase-inputmask").inputmask("aaaa 9999-****"),
-            $(".cc-inputmask").inputmask("9999 9999 9999 9999"),
-            $(".ssn-inputmask").inputmask("999-99-9999"),
-            $(".isbn-inputmask").inputmask("999-99-999-9999-9"),
-            $(".currency-inputmask").inputmask("$9999"),
-            $(".percentage-inputmask").inputmask("99%"),
-            $(".decimal-inputmask").inputmask({
-                alias: "decimal",
-                radixPoint: "."
-            }),
 
-            $(".email-inputmask").inputmask({
-                mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[*{2,6}][*{1,2}].*{1,}[.*{2,6}][.*{1,2}]",
-                greedy: !1,
-                onBeforePaste: function(n, a) {
-                    return (e = e.toLowerCase()).replace("mailto:", "")
-                },
-                definitions: {
-                    "*": {
-                        validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~/-]",
-                        cardinality: 1,
-                        casing: "lower"
-                    }
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="{{asset("assets/vendor/datatables/js/dataTables.bootstrap4.min.js")}}"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="{{asset("assets/vendor/datatables/js/buttons.bootstrap4.min.js")}}"></script>
+<script>
+    function deleteElt(id){
+        $(".checkboxes").prop("checked", false);
+        $("#check"+id).prop("checked", true);
+        $("form").submit()
+    }
+
+    $(document).ready(function() {
+            var table = $('#table').DataTable({
+                fixedHeader: true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
                 }
-            })
-    });
-</script>
-<script>
-    $('#form').parsley();
-</script>
-<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
             });
-        }, false);
-    })();
+            // binding the check all box to onClick event
+            $(".chk_all").click(function() {
+            
+                var checkAll = $(".chk_all").prop('checked');
+                if (checkAll) {
+                    $(".checkboxes").prop("checked", true);
+                } else {
+                    $(".checkboxes").prop("checked", false);
+                }
+            
+            });
+            
+            // if all checkboxes are selected, then checked the main checkbox class and vise versa
+            $(".checkboxes").click(function() {
+            
+            if ($(".checkboxes").length == $(".subscheked:checked").length) {
+                $(".chk_all").attr("checked", "checked");
+            } else {
+                $(".chk_all").removeAttr("checked");
+            }
+            
+            });
+        })
 </script>
+<script src="{{asset("assets/vendor/datatables/js/data-table.js")}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 @endsection

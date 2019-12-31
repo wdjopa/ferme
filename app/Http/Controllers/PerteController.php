@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Vague;
 use App\Perte;
+use App\Comptabilite;
 use Illuminate\Http\Request;
 
 class PerteController extends Controller
@@ -51,9 +52,21 @@ class PerteController extends Controller
             
             $perte->save();
             
+            $comptabilite = new Comptabilite();
+            $comptabilite->depense = true;
+            $comptabilite->recette = false;
+            $comptabilite->auto = true;
+            $comptabilite->montant = $request->prix_total;
+            $comptabilite->date = $request->date;
+            $comptabilite->categorie = "perte";
+            $comptabilite->categorie_id = $approvisionnement->id;
+            $comptabilite->commentaire = "Nouvelle perte de ".$request->quantite." ".$approvisionnement->categorieApprovisionnement->libelle."(s)";
+            $comptabilite->save();
+       
             $vague->quantite = $vague->quantite - $perte->quantite;
             $vague->save();
             
+            ActivityLogger::activity("Nouvelle perte de ".$request->quantite." ".$approvisionnement->categorieApprovisionnement->libelle."(s) par l\'utilisateur :" . Auth::user()->name);
             
             // dd($commande);
             return redirect()->back()->with("success", "La perte a bien été enregistrée");
@@ -125,7 +138,7 @@ class PerteController extends Controller
             
                     $vague->quantite = $vague->quantite + $perte->quantite;
                     $vague->save();
-                    // ActivityLogger::activity("Suppression du perte :" . $perte->nom . ' par l\'utilisateur :' . Auth::user()->name);
+                    ActivityLogger::activity("Suppression d'une perte :" . $perte->nom . ' par l\'utilisateur :' . Auth::user()->name);
                     $perte->delete();
                     $count++;
                 }

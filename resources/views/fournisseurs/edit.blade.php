@@ -1,21 +1,18 @@
 @extends("layouts.app")
 
 @section("content")
-
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="page-header">
-            <h2 class="pageheader-title">Gestion des utilisateurs </h2>
+            <h2 class="pageheader-title">Fournisseurs </h2>
             <p class="pageheader-text"></p>
             <div class="page-breadcrumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route("home")}}"
-                                class="breadcrumb-link">Administrateur</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Gestion du personnel</a></li>
-                        <li class="breadcrumb-item"><a href="{{route("users.index")}}" class="breadcrumb-link">Gestion
-                                des employés</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Modifier un nouvel employé</li>
+                        <li class="breadcrumb-item"><a href="{{route("home")}}" class="breadcrumb-link">Ferme</a></li>
+                        <li class="breadcrumb-item"><a href="{{route("fournisseurs.index")}}"
+                                class="breadcrumb-link">Fournisseurs</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Modification de fournisseurs</li>
                     </ol>
                 </nav>
             </div>
@@ -29,9 +26,9 @@
         <!-- ============================================================== -->
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Modification de l'employé {{ ucfirst($user->name) }}</h5>
+                <h5 class="card-header">Modification d'un nouveau fournisseur</h5>
                 <div class="card-body">
-                    <form method="post" action="{{route("users.update", $user)}}" id="validationform"
+                    <form method="post" action="{{route("fournisseurs.update", $fournisseur)}}" id="validationform"
                         class="needs-validation" data-parsley-validate="" novalidate="">
                         @csrf
                         @method("PUT")
@@ -39,81 +36,54 @@
                             <div class="col-sm-12 col-md-8">
 
                                 <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Noms & prénoms</label>
+                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Nom*</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <div class="row">
-
-                                            <div class="col-6 col-sm-6 col-lg-6">
-                                                <input type="text" value="{{$user->prenom}}" name="prenom"
-                                                    placeholder="Entrez les prénoms complets" class="form-control">
-                                            </div>
-                                            <div class="col-6 col-sm-6 col-lg-6">
-                                                <input type="text" value="{{$user->nom}}" required="" name="nom"
-                                                    placeholder="Entrez les noms complets" class="form-control">
-                                            </div>
-                                        </div>
+                                    <input type="text" required="" value="{{$fournisseur->nom}}" name="nom"
+                                            placeholder="Entrez le nom ou la marque du fournisseur"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Titre/Fonction</label>
+                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Localisation</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" required="" value="{{$user->titre}}" name="titre"
-                                            placeholder="Entrez le titre ou la fonction" class="form-control">
+                                        <input type="text" name="localisation" value="{{$fournisseur->localisation}}" placeholder="Entrez la localisation"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-sm-right">Adresse email</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="email" required="" value="{{$user->email}}" name="email"
-                                            placeholder="Entrez l'adresse email" class="form-control">
+                                        <input type="email" name="email" value="{{$fournisseur->email}}"placeholder="Entrez l'adresse email"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-sm-right">Téléphone
                                         portable</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="tel" class="form-control phone-inputmask" value="{{$user->tel}}"
-                                            name="tel" required id="phone-mask" placeholder="(237) XXX-XXX-XXX">
+                                        <input type="tel" class="form-control phone-inputmask"value="{{$fournisseur->tel}}" name="tel"
+                                            id="phone-mask" placeholder="(237) XXX-XXX-XXX">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">N° CNI</label>
+                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Description</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" required="" name="cni" value="{{$user->cni}}"
-                                            placeholder="Entrez le numéro de CNI" class="form-control">
+                                        <textarea name="description" placeholder="Entrez une note sur le fournisseur"
+                                            class="form-control">{{$fournisseur->description}}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Sexe</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <select name="sexe" id="" required class="form-control">
-                                            <option value="homme" @if($user->sexe == 'homme') selected @endif>Homme
-                                            </option>
-                                            <option value="femme" @if($user->sexe == 'femme') selected @endif>Femme
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Date de
-                                        naissance</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input required name="datenaissance" value="{{$user->datenaissance}}T00:00"
-                                            type="datetime-local" class="form-control" placeholder="jj/mm/aaaa">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-sm-right">Notes</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <textarea name="note" placeholder="Entrez une note sur l'employé"
-                                            class="form-control">{{$user->notes}}</textarea>
-                                    </div>
+
+                                <div class="text-right col-lg-9 col-sm-8 col-12">
+                                    <small>
+                                        (*): Obligatoire
+                                    </small>
                                 </div>
                                 <div class="form-group row text-right">
                                     <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                        <a href="{{route("users.index")}}"
+                                        <a href="{{route("fournisseurs.index")}}"
                                             class="btn btn-space btn-secondary">Annuler</a>
-                                        <button type="submit" class="btn btn-space btn-primary">Créer</button>
+
+                                        <button type="submit" class="btn btn-space btn-primary">Modifier</button>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +91,6 @@
 
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>

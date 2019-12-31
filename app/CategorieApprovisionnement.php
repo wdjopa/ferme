@@ -8,6 +8,6 @@ class CategorieApprovisionnement extends Model
 {
     //
     public function approvisionnements(){
-        return $this->belongsTo(Approvisionnement::class);
+        return $this->belongsToMany(Approvisionnement::class);
     }
 }

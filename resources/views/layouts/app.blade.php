@@ -167,7 +167,7 @@
                                     <span class="status"></span><span
                                         class="ml-2">{{ ucfirst(Auth::user()->email) }}</span>
                                 </div>
-                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Mon Compte</a>
+                            <a class="dropdown-item" href="{{route("users.show", Auth::user())}}"><i class="fas fa-user mr-2"></i>Mon Compte</a>
                                 {{-- <a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Setting</a> --}}
                                 <a class="dropdown-item" href="{{route("logout")}}"><i
                                         class="fas fa-power-off mr-2"></i>Déconnexion</a>
@@ -211,14 +211,14 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            Copyright © 2019 Madelis. All rights reserved. Dashboard by <a
-                                href="https://djopa.fr/">Wilfried Djopa</a>.
+                            Copyright © 2019 <span class="text-primary">Madelis</span>. All rights reserved. Dashboard by <a
+                                href="https://lamater.tech/" class="text-primary">La Mater Tech</a>.
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="https://djopa.fr">À propos du dev</a>
-                                <a href="mailto:services.djopa@gmail.com">Support</a>
-                                <a href="mailto:services.djopa@gmail.com">Contactez-moi</a>
+                                <a href="https://lamater.tech">À propos du dev</a>
+                                <a href="mailto:contact@madelis.net">Support</a>
+                                <a href="mailto:contact@lamater.net">Contactez-moi</a>
                             </div>
                         </div>
                     </div>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\CategorieApprovisionnement;
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class CategorieApprovisionnementController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -60,9 +62,10 @@ class CategorieApprovisionnementController extends Controller
      * @param  \App\CategorieApprovisionnement  $categorieApprovisionnement
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategorieApprovisionnement $categorieApprovisionnement)
+    public function edit(CategorieApprovisionnement $categories_approvisionnement)
     {
-        //
+        return view("categories_approvisionnements.edit", compact("categories_approvisionnement"));
+        
     }
 
     /**
@@ -72,9 +75,12 @@ class CategorieApprovisionnementController extends Controller
      * @param  \App\CategorieApprovisionnement  $categorieApprovisionnement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategorieApprovisionnement $categorieApprovisionnement)
+    public function update(Request $request, CategorieApprovisionnement $categories_approvisionnement)
     {
-        //
+        $categories_approvisionnement->libelle = $request->libelle;
+        $categories_approvisionnement->description = $request->description;
+        $categories_approvisionnement->save();
+        return redirect()->back()->with(['success' => "La catégorie a bien été modifiée"]);
     }
 
     /**
@@ -101,7 +107,7 @@ class CategorieApprovisionnementController extends Controller
                 $count = 0;
                 foreach ($ids as $id) {
                     $categorieApprovisionnement = CategorieApprovisionnement::find($id);
-                    // ActivityLogger::activity("Suppression de la catégorie d'approvisionnement :" . $categorieApprovisionnement->nom . ' par l\'utilisateur :' . Auth::user()->name);
+                    ActivityLogger::activity("Suppression de la catégorie d'approvisionnement :" . $categorieApprovisionnement->libelle . ' par l\'utilisateur :' . Auth::user()->name);
                     $categorieApprovisionnement->delete();
                     $count++;
                 }

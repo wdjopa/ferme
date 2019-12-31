@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comptabilite;
 use App\Approvisionnement;
 use App\CategorieApprovisionnement;
 use App\Vague;
@@ -24,8 +25,9 @@ class ComptabiliteController extends Controller
         $commandes = Commande::all();
         $vagues = Vague::all();
         $fournisseurs = Vague::all();
+        $comptabilites = Comptabilite::all();
 
-        return view("comptabilites.index",compact("categories_approvisionnements", "approvisionnements", "commandes", "vagues", "fournisseurs"));
+        return view("comptabilites.index",compact("comptabilites","categories_approvisionnements", "approvisionnements", "commandes", "vagues", "fournisseurs"));
     }
 
     /**
@@ -52,10 +54,10 @@ class ComptabiliteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Comptabilite $comptabilite
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Comptabilite $comptabilite)
     {
         //
     }
@@ -63,10 +65,10 @@ class ComptabiliteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Comptabilite $comptabilite
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comptabilite $comptabilite)
     {
         //
     }
@@ -75,10 +77,10 @@ class ComptabiliteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Comptabilite $comptabilite
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comptabilite $comptabilite)
     {
         //
     }
@@ -86,11 +88,40 @@ class ComptabiliteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Comptabilite $comptabilite
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comptabilite $comptabilite)
     {
         //
+    }
+    
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function multipleDestroy(Request $request)
+    {
+        // dd($request->all());
+        // if (Auth::user()->can('destroy-categories-approvisionnements')) {
+            if ($request->ids) {
+                $ids = $request->ids;
+                $count = 0;
+                foreach ($ids as $id) {
+                    $comptabilite = Comptabilite::find($id);
+                    // ActivityLogger::activity("Suppression de l'entree comptable :" . $comptabilite->commentaire.' par l\'utilisateur :' . Auth::user()->name);
+                    $comptabilite->delete();
+                    $count++;
+                }
+                $message = $count . ' entrée(s) comptabe supprimée(s) avec succès';
+            } else {
+                $message = "Aucune entrée comptable n'a été supprimé";
+            }
+            return redirect()->back()->with('success', $message);
+        // } else {
+            // return back()->with('error', 'Vous n\'avez pas ce droit');
+        // }
     }
 }

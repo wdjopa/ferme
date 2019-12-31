@@ -156,7 +156,7 @@
                     <td>
                         <a href="{{route("vagues.show", $commande->vague)}}" class="btn btn-xs btn-secondary">Voir</a>
                     </td>
-                </tr>
+                    </tr>
                     @endforeach
                     <tr>
                         <td colspan="9"><a href="{{route("vagues.index")}}"

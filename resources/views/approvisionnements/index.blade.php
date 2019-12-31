@@ -51,7 +51,7 @@
                     role="tabpanel"
                     aria-labelledby="{{str_replace(" ", "", strtolower($categorie->libelle))}}-tab-simple">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <form method="POST" action="{{route("approvisionnements.destroy", $categorie)}}">
+                        <form method="POST" id="delete_app" action="{{route("approvisionnements.multipleDestroy")}}">
                             @csrf
                             <div class="card">
                                 <div class="d-flex justify-content-between">
@@ -70,7 +70,7 @@
                                                 <tr>
                                                     <th>
                                                         <label class="custom-control custom-checkbox be-select-all">
-                                                            <input class="custom-control-input chk_all" type="checkbox"
+                                                            <input class="custom-control-input chk_all {{str_replace(" ", "", strtolower($categorie->libelle))}}_tab" type="checkbox"
                                                                 name="chk_all"><span
                                                                 class="custom-control-label"></span>
                                                         </label>
@@ -90,7 +90,7 @@
                                                 <tr>
                                                     <td>
                                                         <label class="custom-control custom-checkbox">
-                                                            <input class="custom-control-input checkboxes"
+                                                            <input class="custom-control-input {{str_replace(" ", "", strtolower($categorie->libelle))}}_tab checkboxes"
                                                                 type="checkbox" value="{{$app->id}}" name="ids[]"
                                                                 id="check{{$app->id}}"><span
                                                                 class="custom-control-label"></span>
@@ -103,8 +103,7 @@
                                                                 class="fas fa-external-link-alt"></i> Consulter la
                                                             vague</a>
                                                         @else
-                                                        <a href="#"
-                                                            class="btn btn-success btn-xs"> Disponible</a>
+                                                        <a href="#" class="btn btn-success btn-xs"> Disponible</a>
 
                                                         @endif
                                                     </td>
@@ -112,14 +111,15 @@
                                                     <td>{{$app->prix_total}}</td>
                                                     <td>{{$app->date_approvisionnement}}</td>
                                                     <td>
-                                                        <a href="{{route("fournisseurs.show", App\Fournisseur::find($app->fournisseur_id))}}">
-                                                                {{App\Fournisseur::find($app->fournisseur_id)->nom}}
-                                                            </a>
+                                                        <a
+                                                            href="{{route("fournisseurs.show", App\Fournisseur::find($app->fournisseur_id))}}">
+                                                            {{App\Fournisseur::find($app->fournisseur_id)->nom}}
+                                                        </a>
                                                     </td>
                                                     <td>
                                                         <a href="{{route("approvisionnements.edit", $app)}}"
                                                             class="btn btn-brand btn-xs">Modifier</a>
-                                                        <button onclick="deleteElt('{{$app->id}}')"
+                                                      <button  {{--  onclick="deleteElt('{{$app->id}}')" --}}
                                                             class="btn btn-danger btn-xs">Supprimer</button>
                                                     </td>
                                                 </tr>
@@ -130,12 +130,13 @@
                                                 <tr>
                                                     <th>
                                                         <label class="custom-control custom-checkbox be-select-all">
-                                                            <input class="custom-control-input chk_all" type="checkbox"
+                                                            <input class="custom-control-input chk_all {{str_replace(" ", "", strtolower($categorie->libelle))}}_tab" type="checkbox"
                                                                 name="chk_all"><span
                                                                 class="custom-control-label"></span>
                                                         </label>
                                                     </th>
-                                                    <th>Etat</th><th>Quantité</th>
+                                                    <th>Etat</th>
+                                                    <th>Quantité</th>
                                                     <th>Prix total</th>
                                                     <th>Date</th>
                                                     <th>Fournisseur</th>
@@ -251,7 +252,9 @@
 <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 <script>
+    let activetab = "";
     function changeTab(nom){
+        activetab = nom;
         localStorage.setItem("approvisionnement_onglet", nom)
     }
 
@@ -274,6 +277,7 @@
 
         // Ouverture par défaut de la premiere table
         if(localStorage.getItem("approvisionnement_onglet")){
+            activetab = localStorage.getItem("approvisionnement_onglet");
             $("#"+localStorage.getItem("approvisionnement_onglet")+"-tab-simple").click()
         }
         
@@ -284,24 +288,23 @@
             }
         });
         // binding the check all box to onClick event
-        $(".chk_all").click(function() {
-        
-            var checkAll = $(".chk_all").prop('checked');
+        $("."+activetab+"_tab.chk_all").click(function() {
+            var checkAll = $("."+activetab+"_tab.chk_all").prop('checked');
             if (checkAll) {
-                $(".checkboxes").prop("checked", true);
+                $("."+activetab+"_tab.checkboxes").prop("checked", true);
             } else {
-                $(".checkboxes").prop("checked", false);
+                $("."+activetab+"_tab.checkboxes").prop("checked", false);
             }
         
         });
         
         // if all checkboxes are selected, then checked the main checkbox class and vise versa
-        $(".checkboxes").click(function() {
+        $("."+activetab+"_tab.checkboxes").click(function() {
         
-        if ($(".checkboxes").length == $(".subscheked:checked").length) {
-            $(".chk_all").attr("checked", "checked");
+        if ($("."+activetab+"_tab.checkboxes").length == $(".subscheked:checked").length) {
+            $("."+activetab+"_tab.chk_all").attr("checked", "checked");
         } else {
-            $(".chk_all").removeAttr("checked");
+            $("."+activetab+"_tab.chk_all").removeAttr("checked");
         }
         
         });

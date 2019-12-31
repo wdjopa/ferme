@@ -84,7 +84,6 @@
 <!-- end basic table  -->
 <!-- ============================================================== -->
 
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -94,7 +93,7 @@
 
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Création d'un nouvelle catégorie</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Création d'une nouvelle catégorie</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>
@@ -123,8 +122,6 @@
         </form>
     </div>
 </div>
-
-
 
 @endsection
 @section("newcss")

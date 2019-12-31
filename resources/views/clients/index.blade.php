@@ -61,22 +61,24 @@
                                         <td>
                                             <label class="custom-control custom-checkbox">
                                                 <input class="custom-control-input checkboxes" type="checkbox"
-                                                    value="{{$client->id}}" name="ids[]"
-                                                    id="check{{$client->id}}"><span
+                                                    value="{{$client->id}}" name="ids[]" id="check{{$client->id}}"><span
                                                     class="custom-control-label"></span>
                                             </label>
                                         </td>
-                                        <td><a href="{{route("clients.show", $client)}}">{{$client->prenom}} {{$client->nom}}</td>
-                                        <td>{{$client->localisation}}</td>
+                                        <td><a href="{{route("clients.show", $client)}}">{{$client->prenom}}
+                                                {{$client->nom}}</td>
+                                        <td>{{$client->adresse}}</td>
                                         <td>{{$client->tel}}</td>
                                         <td>{{$client->email}}</td>
                                         <td>{{$client->description}}</td>
                                         <td>{{$client->commandes->sum("cout_total")}} FCFA</td>
                                         <td>
-                                            <a href="{{route("clients.edit", $client)}}"
-                                                class="btn btn-brand btn-xs">Modifier</a>
+                                            <a href="{{route("clients.show", $client)}}"
+                                                class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
+                                            <a href="{{route("clients.edit", $client)}}" class="btn btn-brand btn-xs"><i
+                                                    class="fas fa-pencil-alt"></i></a>
                                             <button onclick="deleteElt('{{$client->id}}')"
-                                                class="btn btn-danger btn-xs">Supprimer</button>
+                                                class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach

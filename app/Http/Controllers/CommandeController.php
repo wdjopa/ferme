@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Commande;
+use App\Comptabilite;
 use App\Paiement;
 use App\Vague;
 use App\Livraison;
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class CommandeController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -64,6 +67,7 @@ class CommandeController extends Controller
             
             $vague->quantite = $vague->quantite - $commande->quantite;
             $vague->save();
+            ActivityLogger::activity("Enregistrement d'une nouvelle commande  par l\'utilisateur :" . Auth::user()->name);
             
             
             // dd($commande);
@@ -92,6 +96,19 @@ class CommandeController extends Controller
         if(strlen($request->description)>0)
            $paiement->commentaire = $paiement->commentaire . "--------------" . $request->description;
         $paiement->save();
+        
+        $comptabilite = new Comptabilite();
+        $comptabilite->depense = false;
+        $comptabilite->recette = true;
+        $comptabilite->auto = true;
+        $comptabilite->montant = $request->total;
+        $comptabilite->date = date('Y-m-d H:i:s');
+        $comptabilite->categorie = "paiement";
+        $comptabilite->categorie_id = $paiement->id;
+        $comptabilite->commentaire = "Nouveau paiement pour la commande ".$paiement->commande->id;
+        $comptabilite->save();
+        ActivityLogger::activity("Enregistrement d'un nouveau paiement pour la commande N°".$commande->id." par l\'utilisateur :" . Auth::user()->name);
+
         return redirect()->back()->with("success", "Paiement mis à jour avec succès");
     }
 
@@ -172,7 +189,7 @@ class CommandeController extends Controller
                     
                     $vague->quantite = $vague->quantite + $commande->quantite;
                     $vague->save();
-                    // ActivityLogger::activity("Suppression du commande :" . $commande->nom . ' par l\'utilisateur :' . Auth::user()->name);
+                    ActivityLogger::activity("Suppression de la commande n°" . $commande->id . ' par l\'utilisateur :' . Auth::user()->name);
                     $commande->delete();
                     $count++;
                 }

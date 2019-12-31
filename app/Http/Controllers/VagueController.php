@@ -8,9 +8,11 @@ use App\Approvisionnement;
 use App\CategorieApprovisionnement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class VagueController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *

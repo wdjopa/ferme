@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Approvisionnement extends Model
 {
     //
-    public function categorie(){
+    public function categorieApprovisionnement(){
         return $this->belongsTo(CategorieApprovisionnement::class);
     }
     public function fournisseur(){

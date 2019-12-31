@@ -70,7 +70,8 @@ Route::group(['middleware' => ['auth']], function () {
 
  
     // ComptabiliteController
-    Route::resource('comptabilite', 'ComptabiliteController');
+    Route::resource('comptabilites', 'ComptabiliteController');
+    Route::post('/comptabilites/multipleDestroy', 'ComptabiliteController@multipleDestroy')->name('comptabilites.multipleDestroy');
     // Route::get('vagues/{vague}/approvisionnement', 'VagueController@approvisionnement')->name("vagues.approvisionnement");
     // Route::get('vagues/{vague}/comptabilite', 'VagueController@comptabilite')->name("vagues.comptabilite");
 

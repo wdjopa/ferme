@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class ClientController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -50,6 +52,7 @@ class ClientController extends Controller
         $client->tel = $request->tel;
         $client->adresse = $request->localisation;
         $client->save();
+        ActivityLogger::activity("Le client ".$client->nom." a été enregistré par ".Auth::user()->name);
         return redirect()->route("clients.index")->with(['success' => "Le nouveau client a bien été enregistré", 'sendmailto' => Auth::user()->email]);
 
     }
@@ -73,7 +76,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view("clients.edit", compact('client'));
+        
     }
 
     /**
@@ -85,7 +89,16 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client->nom = $request->nom;
+        $client->prenom = $request->prenom;
+        $client->description = $request->description;
+        $client->email = $request->email;
+        $client->tel = $request->tel;
+        $client->adresse = $request->localisation;
+        $client->save();
+        ActivityLogger::activity("Le client ".$client->nom." a bien été mis à jour par ".Auth::user()->name);
+        return redirect()->back()->with(['success' => "Le client $client->nom a bien été mis à jour", 'sendmailto' => Auth::user()->email]);
+
     }
 
     /**
@@ -112,7 +125,7 @@ class ClientController extends Controller
                 $count = 0;
                 foreach ($ids as $id) {
                     $client = client::find($id);
-                    // ActivityLogger::activity("Suppression du client :" . $client->nom . ' par l\'utilisateur :' . Auth::user()->name);
+                     ActivityLogger::activity("Suppression du client :" . $client->nom . ' par l\'utilisateur :' . Auth::user()->name);
                     $client->delete();
                     $count++;
                 }

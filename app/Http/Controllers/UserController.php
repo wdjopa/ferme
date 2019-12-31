@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
 
 class UserController extends Controller
 {
+    use ActivityLogger;
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +70,7 @@ class UserController extends Controller
         $user->save();
         // $user->teams()->sync($request->teams);
         // $user->assignRole('collaborateur');
-        // ActivityLogger::activity("Ajout d'un nouvel utilisateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
+        ActivityLogger::activity("Ajout d'un nouvel utilisateur : " . $user->name . ' par l\'utilisateur :' . Auth::user()->name);
         return redirect()->back()->with(['success' => "Le nouvel employé a bien été enregistré", 'sendmailto' => $user->email]);
         // }
         //  else {
@@ -129,6 +131,7 @@ class UserController extends Controller
         // $user->teams()->sync($request->teams);
         // $user->assignRole('collaborateur');
         // ActivityLogger::activity("Ajout d'un nouvel utilisateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
+        // ActivityLogger::activity("Modification de l'utilisateur : " . $user->name . ' par l\'utilisateur :' . Auth::user()->name);
         return redirect()->back()->with(['success' => "L'employé a bien été modifié", 'sendmailto' => $user->email]);
         // }
         //  else {
@@ -146,7 +149,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         // if (Auth::user()->can('destroy-users') && Auth::id() != $user->id) {
-            // ActivityLogger::activity("Suppression d'un utilisateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
+            ActivityLogger::activity("Suppression de l'utilisateur :" . $user->name . ' par l\'utilisateur ID:' . Auth::id());
             $user->delete();
             return redirect()->route("users.index")->with("success", "L'employé a bien été supprimé");
         // } else {
@@ -168,6 +171,7 @@ class UserController extends Controller
                 foreach ($ids as $id) {
                     $user = User::find($id);
                     if (Auth::id() != $user->id) {
+                        ActivityLogger::activity("Suppression de l'utilisateur :" . $user->name . ' par l\'utilisateur ID:' . Auth::id());
                         // ActivityLogger::activity("Suppression du collaborateur ID:" . $user->id . ' par l\'utilisateur ID:' . Auth::id());
                         $user->delete();
                         $count++;

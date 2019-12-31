@@ -113,7 +113,7 @@
                                     <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
                                         <a href="{{route("users.index")}}"
                                             class="btn btn-space btn-secondary">Annuler</a>
-                                        <button type="submit" class="btn btn-space btn-primary">Créer</button>
+                                        <button type="submit" class="btn btn-space btn-primary">Modifier</button>
                                     </div>
                                 </div>
                             </div>

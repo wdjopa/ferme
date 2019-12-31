@@ -26,99 +26,93 @@
 
             <div class="tab-pane fade show">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="card">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-header">Liste des entrées</h5>
-                            <h5 class="card-header">
-                                <a href="#!" data-toggle="modal" data-target="#exampleModal"
-                                    class="btn btn-primary btn-xs"
-                                    onclick="add_approvisionnement('id{{$categorie->id}}')">Ajouter </a>
-                                <button class="btn btn-danger btn-xs">Supprimer la sélection</button>
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered first">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <label class="custom-control custom-checkbox be-select-all">
-                                                    <input class="custom-control-input chk_all" type="checkbox"
-                                                        name="chk_all"><span class="custom-control-label"></span>
-                                                </label>
-                                            </th>
-                                            <th>Etat</th>
-                                            <th>Quantité</th>
-                                            <th>Prix total</th>
-                                            <th>Date</th>
-                                            <th>Fournisseur</th>
-                                            <th>Options</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                    <form action="{{route("comptabilites.multipleDestroy")}}" method="post">
+                        @csrf
+                        <div class="card">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-header">Liste des entrées</h5>
+                                <h5 class="card-header">
+                                    <a href="#!" data-toggle="modal" data-target="#exampleModal"
+                                        class="btn btn-primary btn-xs" onclick="ajout()">Ajouter </a>
+                                    <button class="btn btn-danger btn-xs">Supprimer la sélection</button>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered first">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label class="custom-control custom-checkbox be-select-all">
+                                                        <input class="custom-control-input chk_all" type="checkbox"
+                                                            name="chk_all"><span class="custom-control-label"></span>
+                                                    </label>
+                                                </th>
+                                                <th>Categorie</th>
+                                                <th>Commentaire</th>
+                                                <th>Recette</th>
+                                                <th>Dépense</th>
+                                                <th>Date</th>
+                                                <th>Options</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        @foreach ($approvisionnements as $app)
-                                        @if($app->categorie_approvisionnement_id == $categorie->id)
-                                        <tr>
-                                            <td>
-                                                <label class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input checkboxes" type="checkbox"
-                                                        value="{{$app->id}}" name="ids[]" id="check{{$app->id}}"><span
-                                                        class="custom-control-label"></span>
-                                                </label>
-                                            </td>
-                                            <td>
-                                                @if($app->vague)
-                                                <a href="{{route("vagues.show", $app->vague)}}"
-                                                    class="btn btn-primary btn-xs"><i
-                                                        class="fas fa-external-link-alt"></i> Consulter la
-                                                    vague</a>
-                                                @else
-                                                <a href="#" class="btn btn-success btn-xs"> Disponible</a>
+                                            @foreach ($comptabilites as $compta)
+                                            <tr>
+                                                <td>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input checkboxes" type="checkbox"
+                                                            value="{{$compta->id}}" name="ids[]"
+                                                            id="check{{$compta->id}}"><span
+                                                            class="custom-control-label"></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    {{$compta->categorie}}
 
-                                                @endif
-                                            </td>
-                                            <td>{{$app->quantite}}</td>
-                                            <td>{{$app->prix_total}}</td>
-                                            <td>{{$app->date_approvisionnement}}</td>
-                                            <td>
+                                                </td>
+                                                <td>{{$compta->commentaire}}</td>
+                                                <td>@if($compta->recette){{$compta->montant}}@endif</td>
+                                                <td>@if($compta->depense){{$compta->montant}}@endif</td>
+                                                <td>{{$compta->date}}</td>
+                                                {{-- <td>
                                                 <a
-                                                    href="{{route("fournisseurs.show", App\Fournisseur::find($app->fournisseur_id))}}">
-                                                    {{App\Fournisseur::find($app->fournisseur_id)->nom}}
+                                                    href="{{route("fournisseurs.show", App\Fournisseur::find($compta->fournisseur_id))}}">
+                                                {{App\Fournisseur::find($compta->fournisseur_id)->nom}}
                                                 </a>
-                                            </td>
-                                            <td>
-                                                <a href="{{route("approvisionnements.edit", $app)}}"
-                                                    class="btn btn-brand btn-xs">Modifier</a>
-                                                <button onclick="deleteElt('{{$app->id}}')"
-                                                    class="btn btn-danger btn-xs">Supprimer</button>
-                                            </td>
-                                        </tr>
-                                        @endif
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>
-                                                <label class="custom-control custom-checkbox be-select-all">
-                                                    <input class="custom-control-input chk_all" type="checkbox"
-                                                        name="chk_all"><span class="custom-control-label"></span>
-                                                </label>
-                                            </th>
-                                            <th>Etat</th>
-                                            <th>Quantité</th>
-                                            <th>Prix total</th>
-                                            <th>Date</th>
-                                            <th>Fournisseur</th>
-                                            <th>Options</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                                </td> --}}
+                                                <td>
+                                                    <a href="{{route("approvisionnements.edit", $compta)}}"
+                                                        class="btn btn-brand btn-xs">Modifier</a>
+                                                    <button onclick="deleteElt('{{$compta->id}}')"
+                                                        class="btn btn-danger btn-xs">Supprimer</button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>
+                                                    <label class="custom-control custom-checkbox be-select-all">
+                                                        <input class="custom-control-input chk_all" type="checkbox"
+                                                            name="chk_all"><span class="custom-control-label"></span>
+                                                    </label>
+                                                </th>
+                                                <th>Categorie</th>
+                                                <th>Commentaire</th>
+                                                <th>Recette</th>
+                                                <th>Dépense</th>
+                                                <th>Date</th>
+                                                <th>Options</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-
             </div>
         </div>
 
@@ -134,10 +128,10 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form action="{{route("approvisionnements.store")}}" method="POST">
+        <form action="{{route("comptabilites.store")}}" method="POST">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Création d'un nouvelle approvisionnement</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Création d'une dépense / recette</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>
@@ -237,7 +231,9 @@
         // $("#categorie_select #"+id).removeAttr("disabled")
         $("#"+id).attr("selected", "selected")
     }
-
+function numberWithCommas(x) {
+return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
     $(document).ready(function() {
 
         // Ouverture par défaut de la premiere table
@@ -249,7 +245,44 @@
             fixedHeader: true,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
-            }
+            },
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+                
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                i.replace(/[\$,]/g, '')*1 :
+                typeof i === 'number' ?
+                i : 0;
+            };
+            
+            // Total over all pages
+            total = api
+            .column( 4 )
+            .data()
+            .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+            }, 0 );
+            // Total over this page
+            pageTotalDepenses = api
+            .column( 4, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+            }, 0 );
+            // Total over this page
+            pageTotalRecettes = api
+            .column( 3, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+            return intVal(a) + intVal(b);
+            }, 0 );
+            // Update footer
+            $( api.column( 4 ).footer() ).html('<span class="text-danger">'+numberWithCommas(pageTotalDepenses) +' FCFA</span>'),
+            $( api.column( 3 ).footer() ).html('<span class="text-success">'+numberWithCommas(pageTotalRecettes) +' FCFA</span>')}
+            // Update footer
+            // $( api.column( 3 ).footer() ).html(''+pageTotalRecettes +' FCFA')};
         });
         // binding the check all box to onClick event
         $(".chk_all").click(function() {

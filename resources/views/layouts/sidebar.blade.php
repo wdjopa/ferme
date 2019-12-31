@@ -63,17 +63,24 @@
                     </li>
                     <li class="nav-divider">
                         FERME
-                    </li><li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1) == "fournisseurs") active @endif" href="{{route("fournisseurs.index")}}"><i class="fa fa-fw fa-hands-helping"></i>Fournisseurs</a>
-                    </li><li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1) == "clients") active @endif" href="{{route("clients.index")}}"><i class="fa fa-fw fa-user-plus"></i>Clients</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link @if(Request::segment(1) == "approvisionnements") active @endif" href="{{route("approvisionnements.index")}}"><i
+                        <a class="nav-link @if(Request::segment(1) == " fournisseurs") active @endif"
+                            href="{{route("fournisseurs.index")}}"><i
+                                class="fa fa-fw fa-hands-helping"></i>Fournisseurs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1) == " clients") active @endif"
+                            href="{{route("clients.index")}}"><i class="fa fa-fw fa-user-plus"></i>Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1) == " approvisionnements") active @endif"
+                            href="{{route("approvisionnements.index")}}"><i
                                 class="fa fa-fw fa-inbox"></i>Approvisionnement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(Request::segment(1)==='comptabilites') {{ 'active' }} @endif" href="{{route("comptabilite.index")}}"><i class="fa fa-fw fa-donate"></i>
+                        <a class="nav-link @if(Request::segment(1)==='comptabilites') {{ 'active' }} @endif"
+                            href="{{route("comptabilites.index")}}"><i class="fa fa-fw fa-donate"></i>
                             Comptabilité</a>
                     </li>
                     <li class="nav-item ">
@@ -174,10 +181,11 @@
                                     <div id="submenu-2-1" class="collapse submenu" style="">
                                         <ul class="nav flex-column">
                                             <li class="nav-item">
-                                            <a class="nav-link" href="{{route("roles.index")}}">Rôles</a>
+                                                <a class="nav-link" href="{{route("roles.index")}}">Rôles</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="{{route("permissions.index")}}">Permissions</a>
+                                                <a class="nav-link"
+                                                    href="{{route("permissions.index")}}">Permissions</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{route("categories.index")}}">Categories</a>
@@ -189,7 +197,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route("parametres")}}"><i class="fa fa-fw fa-cog"></i>Parametres</a>
+                        <a class="nav-link @if(in_array(Request::segment(1), array("parametres", "categories_approvisionnements"))) {{ 'active' }} @endif" href="{{route("parametres")}}"><i class="fa fa-fw fa-cog"></i>Parametres</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::segment(1)==='activity') {{ 'active' }} @endif" href="{{route("activity")}}"><i class="fa fa-fw fa-clipboard-list"></i>Activités</a>
                     </li>
                     {{-- <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>UI Elements</a>

@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Fournisseur;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use jeremykenedy\LaravelLogger\App\Http\Traits\ActivityLogger;
+
 
 class FournisseurController extends Controller
 {
+    use ActivityLogger;
+
     /**
      * Display a listing of the resource.
      *
@@ -49,6 +53,7 @@ class FournisseurController extends Controller
         $fournisseur->tel = $request->tel;
         $fournisseur->localisation = $request->localisation;
         $fournisseur->save();
+        ActivityLogger::activity("Le fournisseur ".$fournisseur->nom." a bien été créé par ".Auth::user()->name);
         return redirect()->route("fournisseurs.index")->with(['success' => "Le nouveau fournisseur a bien été enregistré", 'sendmailto' => Auth::user()->email]);
 
     }
@@ -61,7 +66,7 @@ class FournisseurController extends Controller
      */
     public function show(Fournisseur $fournisseur)
     {
-        return view("fournisseurs.show", compact("fournisseur"));
+        return view("fournisseurs.edit", compact("fournisseur"));
     }
 
     /**
@@ -72,6 +77,7 @@ class FournisseurController extends Controller
      */
     public function edit(Fournisseur $fournisseur)
     {
+        return view("fournisseurs.edit", compact("fournisseur"));
         //
     }
 
@@ -84,7 +90,16 @@ class FournisseurController extends Controller
      */
     public function update(Request $request, Fournisseur $fournisseur)
     {
-        //
+        $fournisseur->nom = $request->nom;
+        $fournisseur->description = $request->description;
+        $fournisseur->email = $request->email;
+        $fournisseur->tel = $request->tel;
+        $fournisseur->localisation = $request->localisation;
+        $fournisseur->save();
+        ActivityLogger::activity("Le fournisseur ".$fournisseur->nom." a bien été mis à jour par ".Auth::user()->name);
+
+        return redirect()->back()->with(['success' => "Le fournisseur ".$fournisseur->nom." a bien été mis à jour par ".Auth::user()->name, 'sendmailto' => Auth::user()->email]);
+
     }
 
     /**
@@ -111,7 +126,7 @@ class FournisseurController extends Controller
                 $count = 0;
                 foreach ($ids as $id) {
                     $fournisseur = Fournisseur::find($id);
-                    // ActivityLogger::activity("Suppression du fournisseur :" . $fournisseur->nom . ' par l\'utilisateur :' . Auth::user()->name);
+                    ActivityLogger::activity("Suppression du fournisseur :" . $fournisseur->nom . ' par l\'utilisateur :' . Auth::user()->name);
                     $fournisseur->delete();
                     $count++;
                 }
