@@ -49,7 +49,7 @@
                     <h1 class="mb-1">{{ $vague->totalVentesComptant() }} FCFA</h1>
                 </div>
                 <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
-                <span></span><span>{{ $vague->commandes->sum("cout_total") -$vague->totalVentesComptant() }} FCFA restant</span>
+                <span></span><span>{{ $vague->commandes->sum("cout_total") - $vague->totalVentesComptant() }} FCFA restant</span>
                 </div>
             </div>
             <div id="sparkline-revenue"></div>

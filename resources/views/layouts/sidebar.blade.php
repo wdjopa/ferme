@@ -73,7 +73,7 @@
                                 class="fa fa-fw fa-inbox"></i>Approvisionnement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="dashboard-sales.html"><i class="fa fa-fw fa-donate"></i>
+                        <a class="nav-link @if(Request::segment(1)==='comptabilites') {{ 'active' }} @endif" href="{{route("comptabilite.index")}}"><i class="fa fa-fw fa-donate"></i>
                             Comptabilité</a>
                     </li>
                     <li class="nav-item ">

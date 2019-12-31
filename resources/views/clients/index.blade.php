@@ -66,7 +66,7 @@
                                                     class="custom-control-label"></span>
                                             </label>
                                         </td>
-                                        <td>{{$client->prenom}} {{$client->nom}}</td>
+                                        <td><a href="{{route("clients.show", $client)}}">{{$client->prenom}} {{$client->nom}}</td>
                                         <td>{{$client->localisation}}</td>
                                         <td>{{$client->tel}}</td>
                                         <td>{{$client->email}}</td>

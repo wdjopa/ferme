@@ -68,6 +68,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('vagues/{vague}/approvisionnement', 'VagueController@approvisionnement')->name("vagues.approvisionnement");
     Route::get('vagues/{vague}/comptabilite', 'VagueController@comptabilite')->name("vagues.comptabilite");
 
+ 
+    // ComptabiliteController
+    Route::resource('comptabilite', 'ComptabiliteController');
+    // Route::get('vagues/{vague}/approvisionnement', 'VagueController@approvisionnement')->name("vagues.approvisionnement");
+    // Route::get('vagues/{vague}/comptabilite', 'VagueController@comptabilite')->name("vagues.comptabilite");
+
 
     
     // RoleController
